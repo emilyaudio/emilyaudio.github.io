@@ -6,7 +6,7 @@
         <title>Emily Bryner — Voice-over &amp; Audio Post-Production</title>
         <meta
             name="description"
-            content="Emily Bryner is a voice-over artist and audio engineer. Two focused portfolios: voice-over demos, and audio post-production."
+            content="Emily Bryner is voice talent and audio engineer. Two focused portfolios: voice-over demos, and audio post-production."
         />
         <meta
             name="theme-color"
@@ -71,30 +71,50 @@
                 justify-content: safe center;
                 padding-block: clamp(0.25rem, 1vw, 0.75rem);
             }
+            /* Grid geometry mirrors /vo's hero-inner (same column widths,
+               gaps, breakpoints) so the headline, copy, and portrait land in
+               the same place on both surfaces -- no jump between them. The two
+               route cards sit full width beneath the headline and portrait. */
             .hero {
                 display: grid;
-                gap: clamp(1.5rem, 4vw, 3rem);
-                align-items: center;
-                padding-bottom: clamp(1rem, 2.4vw, 1.5rem);
+                align-items: start;
+                column-gap: clamp(1rem, 3vw, 2rem);
+                row-gap: clamp(1.4rem, 3.5vw, 2.4rem);
+                grid-template-columns: 1fr minmax(96px, 130px);
+                grid-template-areas: "copy photo" "cards cards";
             }
-            @media (min-width: 720px) {
+            @media (min-width: 500px) {
                 .hero {
-                    grid-template-columns: 1fr minmax(260px, 340px);
+                    grid-template-columns: 1fr minmax(150px, 230px);
+                    column-gap: clamp(1.5rem, 4vw, 3.5rem);
+                }
+            }
+            @media (min-width: 820px) {
+                .hero {
+                    grid-template-columns: 1fr minmax(240px, 280px);
                 }
             }
             .hero-copy {
+                grid-area: copy;
                 min-width: 0;
+            }
+            .hero-photo {
+                grid-area: photo;
             }
             .hero h1 {
                 font-size: var(--fs-h1);
                 line-height: 1.05;
+                letter-spacing: -0.03em;
+                margin: 1rem 0 0;
                 max-width: 16ch;
+                text-wrap: balance;
             }
             .lead {
                 margin: 1.1rem 0 0;
-                max-width: 48ch;
+                max-width: 44ch;
                 font-size: var(--fs-lead);
                 color: var(--muted);
+                text-wrap: pretty;
             }
             .lead strong {
                 color: var(--text);
@@ -103,6 +123,7 @@
 
             /* Cards */
             .cards {
+                grid-area: cards;
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: clamp(1rem, 2.2vw, 1.6rem);
@@ -121,7 +142,7 @@
                 background: var(--panel);
                 border: 1px solid var(--line);
                 border-radius: 14px;
-                padding: clamp(1.4rem, 3vw, 2rem);
+                padding: clamp(1.2rem, 2.4vw, 1.5rem) clamp(1.4rem, 3vw, 2rem);
                 padding-left: clamp(2rem, 4vw, 3rem);
                 transition:
                     transform 0.18s ease,
@@ -132,8 +153,8 @@
                 content: "";
                 position: absolute;
                 left: 0;
-                top: clamp(1.4rem, 3vw, 2rem);
-                bottom: clamp(1.4rem, 3vw, 2rem);
+                top: clamp(1.2rem, 2.4vw, 1.5rem);
+                bottom: clamp(1.2rem, 2.4vw, 1.5rem);
                 width: 3px;
                 border-radius: 0 3px 3px 0;
                 background: var(--accent);
@@ -157,7 +178,10 @@
             .card h2 {
                 font-size: var(--fs-h2);
                 line-height: 1.1;
-                max-width: 16ch;
+                max-width: 20ch;
+            }
+            .card h2 .hl {
+                color: color-mix(in srgb, var(--accent) 80%, var(--text));
             }
             .card p {
                 margin: 0.9rem 0 0;
@@ -281,9 +305,9 @@
                     <div class="hero-copy">
                         <h1>Two crafts, one trained ear.</h1>
                         <p class="lead">
-                            I'm <strong>Emily Bryner</strong>, a voice-over
-                            artist and audio engineer. Pick the reason you're
-                            here — each path is its own focused portfolio.
+                            I'm <strong>Emily Bryner</strong>, voice talent and
+                            audio engineer. Pick the reason you're here — each
+                            path is its own focused portfolio.
                         </p>
                     </div>
                     <div class="hero-photo">
@@ -294,34 +318,34 @@
                             alt="Emily Bryner"
                         />
                     </div>
-                </section>
 
-                <section class="cards">
-                    <a class="card card--vo" href="/vo/">
-                        <p class="kicker">Voice-over</p>
-                        <h2>A voice they trust on the first take.</h2>
-                        <p>
-                            Corporate narration, e-learning, animation, and
-                            games — delivered broadcast-ready.
-                        </p>
-                        <svg class="wave"><use href="#wave" /></svg>
-                        <span class="cta"
-                            >Hear the demos <span class="arrow">→</span></span
-                        >
-                    </a>
+                    <div class="cards">
+                        <a class="card card--vo" href="/vo/">
+                            <p class="kicker">Voice-over</p>
+                            <h2>A voice you can trust on the <span class="hl">first take.</span></h2>
+                            <p>
+                                Corporate narration, e-learning, animation, and
+                                games — delivered broadcast-ready.
+                            </p>
+                            <svg class="wave"><use href="#wave" /></svg>
+                            <span class="cta"
+                                >Hear the demos <span class="arrow">→</span></span
+                            >
+                        </a>
 
-                    <a class="card card--post" href="/audio/">
-                        <p class="kicker">Audio Post-Production</p>
-                        <h2>Sound that finishes the picture.</h2>
-                        <p>
-                            Sound design, mixing, and sweetening for broadcast,
-                            film, and games.
-                        </p>
-                        <svg class="wave"><use href="#wave" /></svg>
-                        <span class="cta"
-                            >See the work <span class="arrow">→</span></span
-                        >
-                    </a>
+                        <a class="card card--post" href="/audio/">
+                            <p class="kicker">Audio Post-Production</p>
+                            <h2>Sound that finishes the picture.</h2>
+                            <p>
+                                Sound design, mixing, and sweetening for broadcast,
+                                film, and games.
+                            </p>
+                            <svg class="wave"><use href="#wave" /></svg>
+                            <span class="cta"
+                                >See the work <span class="arrow">→</span></span
+                            >
+                        </a>
+                    </div>
                 </section>
             </div>
         </main>
