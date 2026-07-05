@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Emily Bryner — Voice-over &amp; Audio Post-Production</title>
+        <title>Emily Bryner · Voice-over &amp; Audio Post-Production</title>
         <meta
             name="description"
             content="Emily Bryner is voice talent and audio engineer. Two focused portfolios: voice-over demos, and audio post-production."
@@ -17,10 +17,6 @@
             name="theme-color"
             content="#001021"
             media="(prefers-color-scheme: dark)"
-        />
-        <link
-            rel="icon"
-            href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231481BA'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23b23a34'/%3E%3C/svg%3E"
         />
         <script defer src="https://cloud.umami.is/script.js" data-website-id="0a2e8f13-65ed-4f29-9129-6aac83acf402"></script>
         <!-- Google tag (gtag.js) -->
@@ -42,6 +38,10 @@
             :root {
                 --vo: #1481ba;
                 --post: #b23a34;
+                /* A single shallow arc for the headline underline (masked, so
+                   the colour comes from the element, not the SVG). Stretched
+                   under the word -- almost straight, just a hint of curve. */
+                --wave-underline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4.6 Q 50 3 99 4.6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
             }
             @media (prefers-color-scheme: dark) {
                 :root {
@@ -109,10 +109,34 @@
                 max-width: 16ch;
                 text-wrap: balance;
             }
+            /* Neutral underline -- the hub carries both accents, so the
+               emphasis blends them. A gentle hand-drawn wave (SVG mask keeps
+               it theme-coloured) reads softer than CSS's tight `wavy`. */
+            .hero h1 .hl {
+                position: relative;
+                text-decoration: none;
+            }
+            .hero h1 .hl::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0.04em;
+                height: 0.18em;
+                background: color-mix(in srgb, var(--vo), var(--post));
+                -webkit-mask: var(--wave-underline) no-repeat center / 100% 100%;
+                mask: var(--wave-underline) no-repeat center / 100% 100%;
+            }
             .lead {
                 margin: 1.1rem 0 0;
                 max-width: 44ch;
                 font-size: var(--fs-lead);
+                color: var(--muted);
+                text-wrap: pretty;
+            }
+            .lead-sub {
+                margin: 1rem 0 0;
+                max-width: 46ch;
                 color: var(--muted);
                 text-wrap: pretty;
             }
@@ -144,10 +168,34 @@
                 border-radius: 14px;
                 padding: clamp(1.2rem, 2.4vw, 1.5rem) clamp(1.4rem, 3vw, 2rem);
                 padding-left: clamp(2rem, 4vw, 3rem);
+                overflow: hidden;
+                isolation: isolate;
                 transition:
                     transform 0.18s ease,
                     box-shadow 0.18s ease,
                     border-color 0.18s ease;
+            }
+            /* Delicate accent-tinted grain, strongest in the bottom-right and
+               fading out toward the copy. Each surface gets its own grain:
+               horizontal lines for the voice track, vertical for the mixer. */
+            .card::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                color: var(--accent);
+                opacity: 0.12;
+                -webkit-mask: radial-gradient(120% 95% at 100% 100%, #000, transparent 58%);
+                mask: radial-gradient(120% 95% at 100% 100%, #000, transparent 58%);
+                pointer-events: none;
+            }
+            .card--vo::after {
+                background-image: repeating-linear-gradient(
+                    to bottom, currentColor 0 1px, transparent 1px 8px);
+            }
+            .card--post::after {
+                background-image: repeating-linear-gradient(
+                    to right, currentColor 0 1px, transparent 1px 8px);
             }
             .card::before {
                 content: "";
@@ -186,16 +234,17 @@
             .card p {
                 margin: 0.9rem 0 0;
                 color: var(--muted);
-                max-width: 34ch;
             }
+            /* Wave anchors to the bottom so the two cards' icons align even
+               when their descriptions run to different line counts. */
             .wave {
                 width: 132px;
                 height: 40px;
-                margin-top: 1.1rem;
+                margin-top: auto;
                 color: var(--accent);
             }
             .cta {
-                margin-top: auto;
+                margin-top: 0;
                 padding-top: 1.1rem;
                 font-weight: 600;
                 color: var(--accent);
@@ -220,6 +269,7 @@
             }
             .foot {
                 margin: 0;
+                text-align: right;
                 color: var(--muted);
                 font-size: var(--fs-label);
             }
@@ -228,36 +278,69 @@
     <body>
         <a class="skip" href="#top">Skip to content</a>
 
-        <!-- Shared mini-waveform, colored per card via currentColor. -->
+        <!-- Per-card icons: a filled voice waveform for voice-over, an EQ
+             response curve for audio post (faders kept as an alternative).
+             Colored per card via currentColor. -->
         <svg width="0" height="0" style="position: absolute" aria-hidden="true">
-            <symbol id="wave" viewBox="0 0 132 40">
+            <symbol id="wave-vo" viewBox="0 0 132 40">
                 <g fill="currentColor">
-                    <rect x="0" y="22" width="4" height="18" rx="2" />
-                    <rect x="7" y="14" width="4" height="26" rx="2" />
-                    <rect x="14" y="26" width="4" height="14" rx="2" />
-                    <rect x="21" y="8" width="4" height="32" rx="2" />
-                    <rect x="28" y="18" width="4" height="22" rx="2" />
-                    <rect x="35" y="4" width="4" height="36" rx="2" />
-                    <rect x="42" y="24" width="4" height="16" rx="2" />
-                    <rect x="49" y="12" width="4" height="28" rx="2" />
-                    <rect x="56" y="20" width="4" height="20" rx="2" />
-                    <rect x="63" y="10" width="4" height="30" rx="2" />
-                    <rect x="70" y="28" width="4" height="12" rx="2" />
-                    <rect x="77" y="6" width="4" height="34" rx="2" />
-                    <rect x="84" y="22" width="4" height="18" rx="2" />
-                    <rect x="91" y="16" width="4" height="24" rx="2" />
-                    <rect x="98" y="26" width="4" height="14" rx="2" />
-                    <rect x="105" y="12" width="4" height="28" rx="2" />
-                    <rect x="112" y="20" width="4" height="20" rx="2" />
-                    <rect x="119" y="24" width="4" height="16" rx="2" />
-                    <rect x="126" y="18" width="4" height="22" rx="2" />
+                    <rect x="0" y="16" width="4" height="8" rx="2" />
+                    <rect x="6" y="13" width="4" height="14" rx="2" />
+                    <rect x="12" y="9" width="4" height="22" rx="2" />
+                    <rect x="18" y="5" width="4" height="30" rx="2" />
+                    <rect x="24" y="11" width="4" height="18" rx="2" />
+                    <rect x="30" y="15" width="4" height="10" rx="2" />
+                    <rect x="36" y="12" width="4" height="16" rx="2" />
+                    <rect x="42" y="7" width="4" height="26" rx="2" />
+                    <rect x="48" y="3" width="4" height="34" rx="2" />
+                    <rect x="54" y="8" width="4" height="24" rx="2" />
+                    <rect x="60" y="14" width="4" height="12" rx="2" />
+                    <rect x="66" y="10" width="4" height="20" rx="2" />
+                    <rect x="72" y="6" width="4" height="28" rx="2" />
+                    <rect x="78" y="12" width="4" height="16" rx="2" />
+                    <rect x="84" y="16" width="4" height="8" rx="2" />
+                    <rect x="90" y="13" width="4" height="14" rx="2" />
+                    <rect x="96" y="8" width="4" height="24" rx="2" />
+                    <rect x="102" y="4" width="4" height="32" rx="2" />
+                    <rect x="108" y="10" width="4" height="20" rx="2" />
+                    <rect x="114" y="14" width="4" height="12" rx="2" />
+                    <rect x="120" y="11" width="4" height="18" rx="2" />
+                    <rect x="126" y="15" width="4" height="10" rx="2" />
+                </g>
+            </symbol>
+            <symbol id="wave-eq" viewBox="0 0 132 40">
+                <path
+                    d="M2 34 L2 28 C14 28 20 26 28 22 C34 19 38 9 48 9 C58 9 62 20 70 21 C78 22 82 16 92 15 C102 14 108 22 116 27 C122 30 126 32 130 33 L130 34 Z"
+                    fill="currentColor"
+                    opacity="0.16"
+                />
+                <path
+                    d="M2 28 C14 28 20 26 28 22 C34 19 38 9 48 9 C58 9 62 20 70 21 C78 22 82 16 92 15 C102 14 108 22 116 27 C122 30 126 32 130 33"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <circle cx="48" cy="9" r="2.6" fill="currentColor" />
+                <circle cx="92" cy="15" r="2.6" fill="currentColor" />
+            </symbol>
+            <!-- Faders kept as an alternative for the audio-post card. -->
+            <symbol id="wave-faders" viewBox="0 0 132 40">
+                <g fill="none" stroke="currentColor" stroke-linecap="round">
+                    <g stroke-width="2" opacity="0.4">
+                        <path d="M11 5v30M33 5v30M55 5v30M77 5v30M99 5v30M121 5v30" />
+                    </g>
+                    <g stroke-width="4.5">
+                        <path d="M5 24h12M27 12h12M49 28h12M71 9h12M93 19h12M115 15h12" />
+                    </g>
                 </g>
             </symbol>
         </svg>
 
         <header class="bar">
             <div class="wrap bar-in">
-                <a class="brand" href="/" aria-label="Emily Audio — home"
+                <a class="brand" href="/" aria-label="Emily Audio, home"
                     ><span class="brand-logo" aria-hidden="true"></span
 ></a>
                 <nav class="top">
@@ -303,11 +386,15 @@
             <div class="wrap">
                 <section class="hero">
                     <div class="hero-copy">
-                        <h1>Two crafts, one trained ear.</h1>
+                        <h1><span class="hl">Two crafts</span>, one trained ear.</h1>
                         <p class="lead">
                             I'm <strong>Emily Bryner</strong>, voice talent and
-                            audio engineer. Pick the reason you're here — each
-                            path is its own focused portfolio.
+                            audio engineer, equally at home in the booth and
+                            behind the board.
+                        </p>
+                        <p class="lead-sub">
+                            One trained ear across the whole job. Let's tell
+                            your story through sound.
                         </p>
                     </div>
                     <div class="hero-photo">
@@ -322,12 +409,12 @@
                     <div class="cards">
                         <a class="card card--vo" href="/vo/">
                             <p class="kicker">Voice-over</p>
-                            <h2>A voice you can trust on the <span class="hl">first take.</span></h2>
+                            <h2><span class="hl">A voice</span> you can trust on the first take.</h2>
                             <p>
                                 Corporate narration, e-learning, animation, and
-                                games — delivered broadcast-ready.
+                                video games. Delivered broadcast-ready.
                             </p>
-                            <svg class="wave"><use href="#wave" /></svg>
+                            <svg class="wave"><use href="#wave-vo" /></svg>
                             <span class="cta"
                                 >Hear the demos <span class="arrow">→</span></span
                             >
@@ -335,12 +422,12 @@
 
                         <a class="card card--post" href="/audio/">
                             <p class="kicker">Audio Post-Production</p>
-                            <h2>Sound that finishes the picture.</h2>
+                            <h2><span class="hl">Sound</span> that finishes the picture.</h2>
                             <p>
                                 Sound design, mixing, and sweetening for broadcast,
-                                film, and games.
+                                film, and video games.
                             </p>
-                            <svg class="wave"><use href="#wave" /></svg>
+                            <svg class="wave"><use href="#wave-eq" /></svg>
                             <span class="cta"
                                 >See the work <span class="arrow">→</span></span
                             >
@@ -353,7 +440,7 @@
         <footer class="site">
             <div class="wrap">
                 <p class="foot">
-                    &copy; 2026 Emily Bryner &mdash; Voice-over &amp; Audio
+                    &copy; 2026 Emily Bryner &middot; Voice-over &amp; Audio
                     Post-Production
                 </p>
             </div>
