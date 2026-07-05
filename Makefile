@@ -19,14 +19,14 @@ all: deps
 	@if tmux has-session -t $(SESSION) 2>/dev/null; then \
 		echo "Session '$(SESSION)' already running -- attaching."; \
 	else \
-		tmux new-session -d -s $(SESSION) -c "$(CURDIR)" 'browser-sync start --server --no-notify --files "**/*.html,**/*.css,**/*.js"; exec $$SHELL'; \
+		tmux new-session -d -s $(SESSION) -c "$(CURDIR)" 'npx browser-sync start --server --no-notify --files "**/*.html,**/*.css,**/*.js"; exec $$SHELL'; \
 		tmux split-window -h -t $(SESSION) -c "$(CURDIR)" 'exec claude'; \
 	fi
 	@if [ -n "$$TMUX" ]; then tmux switch-client -t $(SESSION); else tmux attach -t $(SESSION); fi
 
 # Provision from a bare system. brew installs tmux/node/chrome; claude uses
 # Anthropic's recommended native installer (self-contained, auto-updating --
-# https://code.claude.com/docs/en/setup); node brings npm for browser-sync.
+# https://code.claude.com/docs/en/setup); node brings npm/npx for browser-sync.
 # Each check is a no-op once satisfied, so re-running is cheap.
 deps:
 	@command -v brew >/dev/null || { echo "Install Homebrew first: https://brew.sh"; exit 1; }
@@ -34,7 +34,6 @@ deps:
 	@command -v node >/dev/null || brew install node
 	@[ -e "$(CHROME)" ] || brew install --cask google-chrome
 	@command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
-	@command -v browser-sync >/dev/null || npm install -g browser-sync
 
 # Screenshot the running site to $(SHOT) so Claude can Read it. Scrollbars are
 # left visible on purpose -- a stray scrollbar is a real layout bug worth seeing.
