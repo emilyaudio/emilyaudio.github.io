@@ -430,56 +430,7 @@
                 background: #000;
                 object-fit: cover;
             }
-            .vmedia {
-                position: relative;
-                line-height: 0;
-            }
-            .vplay {
-                position: absolute;
-                inset: 0;
-                margin: auto;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                border: none;
-                background: var(--accent);
-                color: #fff;
-                display: grid;
-                place-items: center;
-                cursor: pointer;
-                box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
-                transition:
-                    transform 0.15s ease,
-                    opacity 0.2s ease;
-            }
-            .vplay svg {
-                width: 24px;
-                height: 24px;
-                margin-left: 3px;
-            }
-            .vplay:hover {
-                transform: scale(1.09);
-            }
-            .vmedia.playing .vplay {
-                opacity: 0;
-                pointer-events: none;
-            }
-            .vdur {
-                position: absolute;
-                bottom: 10px;
-                right: 10px;
-                background: rgba(0, 0, 0, 0.85);
-                color: #fff;
-                padding: 6px 8px;
-                border-radius: 6px;
-                font-size: var(--fs-label);
-                line-height: 1;
-                font-variant-numeric: tabular-nums;
-                transition: opacity 0.2s ease;
-            }
-            .vmedia.playing .vdur {
-                opacity: 0;
-            }
+            /* Video card player (.vmedia/.vplay/.vdur) is shared -- see base.css. */
             .vmeta {
                 padding: 1rem 1.1rem 1.2rem;
             }
@@ -616,11 +567,10 @@
                         color-mix(in srgb, var(--accent) 26%, transparent),
                         transparent 55%
                     ),
-                    radial-gradient(
-                            rgba(255, 255, 255, 0.05) 1px,
-                            transparent 1.5px
-                        )
-                        0 0 / 22px 22px,
+                    /* Dot field with ~40% of the grid randomly missing, so it
+                       reads as scattered rather than a repeating lattice. */
+                    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20154%20154'%20fill='%23ffffff'%20fill-opacity='0.05'%3E%3Ccircle%20cx='33'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='55'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='143'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='143'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='55'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='143'%20r='1'/%3E%3C/svg%3E")
+                        0 0 / 154px 154px,
                     var(--deep);
                 color: #fff;
             }
@@ -1324,73 +1274,8 @@
                 });
             })();
 
-            // Selected work is static HTML above (one .group per kind). The
-            // behaviour below reads those cards from the DOM.
-
-            // Video cards play in place: click the overlay to play with sound;
-            // on capable pointers a muted preview runs on hover. Same behaviour
-            // as /vo, minus the cross-card coordination (these are independent).
-            (function () {
-                function fmtDur(t) {
-                    if (!isFinite(t)) return "";
-                    var mm = Math.floor(t / 60),
-                        ss = Math.floor(t % 60);
-                    return mm + ":" + (ss < 10 ? "0" : "") + ss;
-                }
-                var canHoverPreview =
-                    matchMedia("(hover: hover)").matches &&
-                    matchMedia("(prefers-reduced-motion: no-preference)")
-                        .matches;
-                document.querySelectorAll(".vmedia").forEach(function (m) {
-                    var v = m.querySelector("video"),
-                        b = m.querySelector(".vplay"),
-                        dur = m.querySelector(".vdur");
-                    var clicked = false; // true once the user clicks to play with sound.
-                    function setDur() {
-                        if (dur) dur.textContent = fmtDur(v.duration);
-                    }
-                    v.addEventListener("loadedmetadata", setDur);
-                    if (v.readyState >= 1) setDur();
-
-                    b.addEventListener("click", function () {
-                        clicked = true;
-                        v.muted = false;
-                        v.currentTime = 0;
-                        v.controls = true;
-                        v.play();
-                    });
-                    v.addEventListener("play", function () {
-                        if (clicked) {
-                            m.classList.add("playing");
-                            b.tabIndex = -1;
-                        }
-                    });
-                    v.addEventListener("pause", function () {
-                        m.classList.remove("playing");
-                        v.controls = false;
-                        b.tabIndex = 0;
-                    });
-                    v.addEventListener("ended", function () {
-                        m.classList.remove("playing");
-                        v.controls = false;
-                        clicked = false;
-                        b.tabIndex = 0;
-                    });
-
-                    if (canHoverPreview) {
-                        m.addEventListener("mouseenter", function () {
-                            if (clicked || !v.paused) return;
-                            v.muted = true;
-                            v.play().catch(function () {});
-                        });
-                        m.addEventListener("mouseleave", function () {
-                            if (clicked) return;
-                            v.pause();
-                            v.load(); // load() restores the poster.
-                        });
-                    }
-                });
-            })();
+            // Selected work is static HTML above (one .group per kind). Video
+            // card playback is shared behaviour -- see /base.js.
 
             // Finesse: gentle scroll-in reveals (skipped when reduced motion is
             // preferred or IntersectionObserver is missing).
