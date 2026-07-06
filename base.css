@@ -238,11 +238,18 @@ nav.top a:hover {
     min-width: 0;
     width: 100%;
     max-width: 232px;
-    justify-self: center;
+    /* Pin the frame to the right of its column. The column can be wider than
+       the frame's max-width at desktop, so centering would leave a gap on the
+       right and the photo drifts left of the content line. */
+    justify-self: end;
     aspect-ratio: 4 / 5;
     overflow: hidden;
     border-radius: 8px;
     background: var(--photo-bg);
+    /* Shift the frame left by the shadow's x-offset so the offset block's
+       right edge -- the outermost visible edge -- lands on the content line
+       (theme toggle, route cards), instead of the frame overshooting it. */
+    transform: translateX(-14px);
     box-shadow:
         14px 14px 0 -1px color-mix(in srgb, var(--text) 10%, var(--bg)),
         0 12px 34px -16px rgba(0, 0, 0, 0.3);

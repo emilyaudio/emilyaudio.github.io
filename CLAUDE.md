@@ -5,7 +5,7 @@ Hand-written HTML, no build step, GitHub Pages.
 
 ## Mental model
 A neutral hub (`index.html`) routing to two standalone portfolios: voice-over
-(`vo/`, live) and audio post-production (`audio/`, in progress). Each stands on
+(`vo/`, live) and audio post-production (`audio/`, live). Each stands on
 its own -- they cross-link but don't share nav or contact.
 
 ## Design: shared chrome + per-surface accent
@@ -22,6 +22,15 @@ take their own accent color over the shared neutral system (voice-over = blue,
 audio = red); the hub itself stays neutral (carries both). Pages remain
 standalone *for the visitor* (no shared nav/contact) -- sharing a stylesheet is
 a code concern, not a UX one.
+
+## Content in HTML, behaviour in JS
+Hand-write portfolio content (e.g. "Selected work" cards) as static HTML so it
+renders without JS -- crawlable, link-preview-friendly, and matching the
+no-build-step ethos. `/vo` and `/audio` both do this. Reserve JS for behaviour
+(playback, hover, reveal) and for genuinely *generated* markup: the `/vo` hero
+demo waveforms are 64 procedural bars per reel, so static would mean
+hand-writing 320 `<span>`s -- they stay JS. Rule: static for content; JS only
+when static means transcribing generated output. Simplest correct solution wins.
 
 ## Design standards (non-negotiable)
 Every visual change must satisfy these. When they conflict with a quick fix,
@@ -86,6 +95,6 @@ Assumes a bare machine with only `make` + `brew`; first run installs the rest.
   recommended native installer; browser-sync via npm. Alt: `python3 -m http.server`.
 
 ## Gotchas
-- `vo/index.html` and the archived old audio-page dump are very large HTML files
-  that exceed Read limits -- use grep/sed for lookups, never a full Read.
+- `vo/index.html` and `audio/index.html` are very large HTML files that exceed
+  Read limits -- use grep/sed for lookups, never a full Read.
 - To see the running site, use `make shot` (above) and Read the PNG.

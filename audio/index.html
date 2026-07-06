@@ -966,11 +966,191 @@
                         </p>
                     </div>
 
-                    <!-- ponytail: work is rendered from the WORK array in the
-                         script below -- one place to reorder/relabel. Thumbnails
-                         pull from YouTube (i.ytimg.com); swap to self-hosted
-                         posters before launch for zero third-party requests. -->
-                    <div id="workGroups"></div>
+                    <!-- Static cards. The .vmedia inner (video/button/vdur)
+                         stays on one line: no whitespace between those tags, so
+                         the overlay play button and duration sit flush over the
+                         video. Playback + scroll-reveal are wired in the script
+                         below, which reads these elements from the DOM. -->
+                    <div class="group">
+                        <div class="group-h"><span class="n">Network packaging &amp; promos</span><span class="rule"></span></div>
+                        <div class="work-grid">
+                            <article class="vcard feature">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/979anvKMhh0.jpg"><source src="clip/979anvKMhh0.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Archer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Recording &amp; post &middot; FX</span>
+                                    <h3>Archer</h3>
+                                    <p class="vsub">Recorded and edited main and supporting characters across the early seasons, working directly with the creators on music selection and episode builds.</p>
+                                    <p class="vcred">ARCHER for FX &middot; Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/mFu6XsjGeZg.jpg"><source src="clip/mFu6XsjGeZg.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Cartoon Network All Stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Packaging</span>
+                                    <h3>Cartoon Network All Stars</h3>
+                                    <p class="vsub">Bumper and show-open package for the network's All Stars block.</p>
+                                    <p class="vcred">AWESOME, INC. &middot; Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/DarRqCI1PIk.jpg"><source src="clip/DarRqCI1PIk.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Cartoon Network World Cup"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Promo</span>
+                                    <h3>Cartoon Network World Cup</h3>
+                                    <p class="vcred">AWESOME, INC. &middot; Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/l2-tD_Qvh8I.jpg"><source src="clip/l2-tD_Qvh8I.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Boomerang World Cup"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Promo</span>
+                                    <h3>Boomerang World Cup</h3>
+                                    <p class="vcred">AWESOME, INC. &middot; Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/pEIsHfJEjBo.jpg"><source src="clip/pEIsHfJEjBo.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Cartoon Network Reface"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Packaging</span>
+                                    <h3>Cartoon Network Reface</h3>
+                                    <p class="vcred">AWESOME, INC. &middot; Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/PFB8r8FoCyw.jpg"><source src="clip/PFB8r8FoCyw.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Cartoon Network Heroes"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Packaging</span>
+                                    <h3>Cartoon Network Heroes</h3>
+                                    <p class="vcred">AWESOME, INC. &middot; Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/H9i4Ogg9-cU.jpg"><source src="clip/H9i4Ogg9-cU.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play CNN Jane Velez-Mitchell"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Broadcast</span>
+                                    <h3>CNN Jane Velez-Mitchell</h3>
+                                    <p class="vcred">Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/YhEaI-foR5M.jpg"><source src="clip/YhEaI-foR5M.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Nick@Nite Pop Quiz"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Broadcast</span>
+                                    <h3>Nick@Nite Pop Quiz</h3>
+                                    <p class="vcred">Bluetube</p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group-h"><span class="n">Commercial &amp; corporate</span><span class="rule"></span></div>
+                        <div class="work-grid">
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/jeYSAlz1Ue4.jpg"><source src="clip/jeYSAlz1Ue4.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Commercial &amp; corporate reel"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Reel</span>
+                                    <h3>Commercial &amp; corporate reel</h3>
+                                    <p class="vsub">Sizzles, spots, and internal marketing pieces. A sampler of past post work.</p>
+                                    <p class="vcred">Various clients</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/YAzD6SqNaqc.jpg"><source src="clip/YAzD6SqNaqc.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Pilot Best Coffee"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Directional audio</span>
+                                    <h3>Pilot Best Coffee</h3>
+                                    <p class="vsub">In-store spot mixed for directional speakers, audible only head-on.</p>
+                                    <p class="vcred">MIRA Design + Strategy</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/b9UnFxU7JiA.jpg"><source src="clip/b9UnFxU7JiA.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play BBVA Compass New Look"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Commercial</span>
+                                    <h3>BBVA Compass New Look</h3>
+                                    <p class="vcred">Sapient Nitro</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/G8JsVF9Alqw.jpg"><source src="clip/G8JsVF9Alqw.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Santander"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Commercial</span>
+                                    <h3>Santander</h3>
+                                    <p class="vcred">Sapient Nitro</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/icl9EEpDvwM.jpg"><source src="clip/icl9EEpDvwM.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Regions FanCam"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Commercial</span>
+                                    <h3>Regions FanCam</h3>
+                                    <p class="vcred">Sapient Nitro</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/ifwUlTTy4P0.jpg"><source src="clip/ifwUlTTy4P0.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Sports Platform"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Fan engagement</span>
+                                    <h3>Sports Platform</h3>
+                                    <p class="vcred">Sapient Nitro</p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="group-h"><span class="n">Games &amp; sound design</span><span class="rule"></span></div>
+                        <div class="work-grid">
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/-Pik2ZIiaVo.jpg"><source src="clip/-Pik2ZIiaVo.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play The Sims 3 Teaser"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Game promo</span>
+                                    <h3>The Sims 3 Teaser</h3>
+                                    <p class="vcred">Bluetube</p>
+                                </div>
+                            </article>
+                            <article class="vcard">
+                                <div class="vmedia">
+                                    <video preload="metadata" playsinline poster="clip/pVOGPsv_74w.jpg"><source src="clip/pVOGPsv_74w.mp4" type="video/mp4" /></video><button type="button" class="vplay" aria-label="Play Ripley's Poker Face"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="vdur"></span>
+                                </div>
+                                <div class="vmeta">
+                                    <span class="vtag">Sound design</span>
+                                    <h3>Ripley's Poker Face</h3>
+                                    <p class="vsub">Music parts programmed for animatronics that toured Ripley's museums.</p>
+                                    <p class="vcred">Bluetube</p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1144,83 +1324,8 @@
                 });
             })();
 
-            // Selected work: rendered from data so the roster lives in one
-            // place. Each card links out to the piece on YouTube; the poster is
-            // that video's thumbnail. `feature` makes the first card span wide.
-            var WORK = [
-                {
-                    name: "Network packaging &amp; promos",
-                    items: [
-                        { id: "979anvKMhh0", tag: "Recording &amp; post &middot; FX", title: "Archer", cred: "ARCHER for FX &middot; Bluetube", sub: "Recorded and edited main and supporting characters across the early seasons, working directly with the creators on music selection and episode builds.", feature: true },
-                        { id: "mFu6XsjGeZg", tag: "Packaging", title: "Cartoon Network All Stars", cred: "AWESOME, INC. &middot; Bluetube", sub: "Bumper and show-open package for the network's All Stars block." },
-                        { id: "DarRqCI1PIk", tag: "Promo", title: "Cartoon Network World Cup", cred: "AWESOME, INC. &middot; Bluetube" },
-                        { id: "l2-tD_Qvh8I", tag: "Promo", title: "Boomerang World Cup", cred: "AWESOME, INC. &middot; Bluetube" },
-                        { id: "pEIsHfJEjBo", tag: "Packaging", title: "Cartoon Network Reface", cred: "AWESOME, INC. &middot; Bluetube" },
-                        { id: "PFB8r8FoCyw", tag: "Packaging", title: "Cartoon Network Heroes", cred: "AWESOME, INC. &middot; Bluetube" },
-                        { id: "H9i4Ogg9-cU", tag: "Broadcast", title: "CNN Jane Velez-Mitchell", cred: "Bluetube" },
-                        { id: "YhEaI-foR5M", tag: "Broadcast", title: "Nick@Nite Pop Quiz", cred: "Bluetube" }
-                    ]
-                },
-                {
-                    name: "Commercial &amp; corporate",
-                    items: [
-                        { id: "jeYSAlz1Ue4", tag: "Reel", title: "Commercial &amp; corporate reel", cred: "Various clients", sub: "Sizzles, spots, and internal marketing pieces. A sampler of past post work." },
-                        { id: "YAzD6SqNaqc", tag: "Directional audio", title: "Pilot Best Coffee", cred: "MIRA Design + Strategy", sub: "In-store spot mixed for directional speakers, audible only head-on." },
-                        { id: "b9UnFxU7JiA", tag: "Commercial", title: "BBVA Compass New Look", cred: "Sapient Nitro" },
-                        { id: "G8JsVF9Alqw", tag: "Commercial", title: "Santander", cred: "Sapient Nitro" },
-                        { id: "icl9EEpDvwM", tag: "Commercial", title: "Regions FanCam", cred: "Sapient Nitro" },
-                        { id: "ifwUlTTy4P0", tag: "Fan engagement", title: "Sports Platform", cred: "Sapient Nitro" }
-                    ]
-                },
-                {
-                    name: "Games &amp; sound design",
-                    items: [
-                        { id: "-Pik2ZIiaVo", tag: "Game promo", title: "The Sims 3 Teaser", cred: "Bluetube" },
-                        { id: "pVOGPsv_74w", tag: "Sound design", title: "Ripley's Poker Face", cred: "Bluetube", sub: "Music parts programmed for animatronics that toured Ripley's museums." }
-                    ]
-                }
-            ];
-            function card(it) {
-                // Self-hosted clip that plays in place; poster is a frame from
-                // the (bar-free) clip. Both live under clip/<id>.{mp4,jpg}.
-                return (
-                    '<article class="vcard' +
-                    (it.feature ? " feature" : "") +
-                    '">' +
-                    '<div class="vmedia">' +
-                    '<video preload="metadata" playsinline poster="clip/' +
-                    it.id +
-                    '.jpg"><source src="clip/' +
-                    it.id +
-                    '.mp4" type="video/mp4" /></video>' +
-                    '<button type="button" class="vplay" aria-label="Play ' +
-                    it.title +
-                    '"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
-                    '<span class="vdur"></span>' +
-                    "</div>" +
-                    '<div class="vmeta"><span class="vtag">' +
-                    it.tag +
-                    "</span><h3>" +
-                    it.title +
-                    "</h3>" +
-                    (it.sub ? '<p class="vsub">' + it.sub + "</p>" : "") +
-                    '<p class="vcred">' +
-                    it.cred +
-                    "</p></div></article>"
-                );
-            }
-            document.getElementById("workGroups").innerHTML = WORK.map(
-                function (g) {
-                    return (
-                        '<div class="group"><div class="group-h"><span class="n">' +
-                        g.name +
-                        '</span><span class="rule"></span></div>' +
-                        '<div class="work-grid">' +
-                        g.items.map(card).join("") +
-                        "</div></div>"
-                    );
-                },
-            ).join("");
+            // Selected work is static HTML above (one .group per kind). The
+            // behaviour below reads those cards from the DOM.
 
             // Video cards play in place: click the overlay to play with sound;
             // on capable pointers a muted preview runs on hover. Same behaviour
