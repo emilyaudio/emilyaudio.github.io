@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Emily Bryner · Audio Post-Production</title>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="0a2e8f13-65ed-4f29-9129-6aac83acf402"></script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-H1J935NQPM"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-H1J935NQPM");
+        </script>
+        <meta
+            name="description"
+            content="Emily Bryner · audio engineer. Sound design, mixing, sweetening, and dialogue editing for broadcast, film, and video games."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Emily Bryner · Audio Post-Production" />
+        <meta
+            property="og:description"
+            content="Sound design, mixing, sweetening, and dialogue editing for broadcast, film, and video games."
+        />
+        <meta
+            name="theme-color"
+            content="#faf5f3"
+            media="(prefers-color-scheme: light)"
+        />
+        <meta
+            name="theme-color"
+            content="#190a08"
+            media="(prefers-color-scheme: dark)"
+        />
+        <script>
+            // Apply a saved theme before paint. With none, data-theme stays unset
+            // so base.css follows the OS live. Toggle + persistence live in /base.js.
+            try {
+                var t = localStorage.getItem("theme");
+                if (t === "light" || t === "dark")
+                    document.documentElement.setAttribute("data-theme", t);
+            } catch (e) {}
+        </script>
+        <link rel="stylesheet" href="/base.css" />
+        <script defer src="/base.js"></script>
+        <style>
+            /* Audio post surface -- accent red. Shared chrome (reset, header,
+               portrait) lives in /base.css; the tokens below are page-specific.
+               Mirrors the structure of /vo (same header, hero geometry, section
+               rhythm, contact band, footer) so the two surfaces feel like
+               siblings -- only the accent and the content differ.
+
+               base.css ships COOL neutrals (a blue-tinted near-black) tuned for
+               the neutral hub and the blue /vo. A red surface on a blue-grey
+               ground reads as two accents fighting, so we re-tint the neutral
+               ramp WARM here -- same brightness steps as base.css, hue shifted
+               from blue toward the red accent. The saferule: saturate neutrals
+               with a hint of the accent, warm OR cool, not both. */
+            :root {
+                --accent: #b23a34;
+                --accent2: #e0685c;
+                --deep: #7a2a24;
+                --btn-bg: #1c0c0a;
+                --btn-fg: #ffffff;
+                /* Warm light neutrals. */
+                --bg: #faf5f3;
+                --panel: #ffffff;
+                --text: #1c0c0a;
+                --muted: #6a4a44;
+                --faint: #8a655e;
+                --line: #ecdcd7;
+            }
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --accent: #e0685c;
+                    --accent2: #f08578;
+                    --deep: #5a201b;
+                    --btn-bg: #f6efed;
+                    --btn-fg: #1c0c0a;
+                    /* Warm dark neutrals. */
+                    --bg: #190a08;
+                    --panel: #2c1613;
+                    --text: #f6efed;
+                    --muted: #c2a8a2;
+                    --faint: #b1968f;
+                    --line: #3a201c;
+                }
+            }
+            :root[data-theme="light"] {
+                --accent: #b23a34;
+                --accent2: #e0685c;
+                --deep: #7a2a24;
+                --btn-bg: #1c0c0a;
+                --btn-fg: #ffffff;
+                --bg: #faf5f3;
+                --panel: #ffffff;
+                --text: #1c0c0a;
+                --muted: #6a4a44;
+                --faint: #8a655e;
+                --line: #ecdcd7;
+            }
+            :root[data-theme="dark"] {
+                --accent: #e0685c;
+                --accent2: #f08578;
+                --deep: #5a201b;
+                --btn-bg: #f6efed;
+                --btn-fg: #1c0c0a;
+                --bg: #190a08;
+                --panel: #2c1613;
+                --text: #f6efed;
+                --muted: #c2a8a2;
+                --faint: #b1968f;
+                --line: #3a201c;
+            }
+
+            /* Header extras beyond the shared brand/toggle in base.css. Same as
+               /vo so the two surfaces share a header verbatim. */
+            .menuBtn {
+                display: grid;
+                place-items: center;
+                background: transparent;
+                border: none;
+                color: var(--muted);
+                cursor: pointer;
+                padding: 0.3rem;
+            }
+            .menuBtn:hover {
+                color: var(--text);
+            }
+            .menuBtn svg {
+                width: 22px;
+                height: 22px;
+            }
+            .mobile-menu {
+                position: absolute;
+                top: calc(100% - 12px);
+                right: var(--gutter);
+                z-index: 50;
+                display: grid;
+                gap: 0.15rem;
+                min-width: 170px;
+                background: var(--panel);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                padding: 0.5rem;
+                box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.4);
+            }
+            .mobile-menu[hidden] {
+                display: none;
+            }
+            .mobile-menu a {
+                text-decoration: none;
+                color: var(--text);
+                font-size: var(--fs-sm);
+                padding: 0.6rem 0.75rem;
+                border-radius: 8px;
+            }
+            .mobile-menu a:hover,
+            .mobile-menu a:focus-visible {
+                background: color-mix(in srgb, var(--text) 6%, transparent);
+            }
+            @media (min-width: 760px) {
+                .menuBtn,
+                .mobile-menu {
+                    display: none !important;
+                }
+            }
+            .nav-hide {
+                display: none;
+            }
+            @media (min-width: 760px) {
+                .nav-hide {
+                    display: inline;
+                }
+            }
+            nav.top a {
+                position: relative;
+            }
+            nav.top a::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -4px;
+                height: 1.5px;
+                background: currentColor;
+                border-radius: 2px;
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.25s cubic-bezier(0.2, 0.6, 0.2, 1);
+            }
+            nav.top a:hover::after {
+                transform: scaleX(1);
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6em;
+                background: var(--btn-bg);
+                color: var(--btn-fg);
+                font: inherit;
+                font-weight: 600;
+                font-size: var(--fs-sm);
+                text-decoration: none;
+                cursor: pointer;
+                border: none;
+                border-radius: 100px;
+                padding: 0.8em 1.4em;
+                line-height: 1;
+                transition:
+                    opacity 0.15s ease,
+                    transform 0.15s ease;
+            }
+            .btn:hover {
+                opacity: 0.85;
+                transform: translateY(-1px);
+            }
+
+            /* Hero -- same grid geometry and breakpoints as /vo and the hub, so
+               the headline + portrait land in the same place across surfaces. */
+            .hero {
+                padding-top: clamp(0.5rem, 1.5vw, 1.2rem);
+                padding-bottom: clamp(3rem, 6vw, 5.5rem);
+            }
+            .hero-inner {
+                display: grid;
+                align-items: start;
+                column-gap: clamp(1rem, 3vw, 2rem);
+                row-gap: clamp(1.6rem, 4vw, 3rem);
+                grid-template-columns: 1fr minmax(96px, 130px);
+                grid-template-areas: "copy photo";
+            }
+            @media (min-width: 500px) {
+                .hero-inner {
+                    grid-template-columns: 1fr minmax(150px, 230px);
+                    column-gap: clamp(1.5rem, 4vw, 3.5rem);
+                }
+            }
+            @media (min-width: 820px) {
+                .hero-inner {
+                    grid-template-columns: 1fr minmax(240px, 280px);
+                }
+            }
+            .hero-copy {
+                grid-area: copy;
+                min-width: 0;
+            }
+            .hero-photo {
+                grid-area: photo;
+            }
+            .hero h1 {
+                font-size: var(--fs-h1);
+                line-height: 1.05;
+                letter-spacing: -0.03em;
+                margin: 1rem 0 0;
+                text-wrap: balance;
+            }
+            .hero h1 .hl {
+                color: color-mix(in srgb, var(--accent) 80%, var(--text));
+            }
+            .hero .sub {
+                font-size: var(--fs-lead);
+                color: var(--muted);
+                max-width: 46ch;
+                margin: 1.1rem 0 0;
+                text-wrap: pretty;
+            }
+            .hero-cta {
+                margin: clamp(1.4rem, 3vw, 2rem) 0 0;
+            }
+
+            /* Sections -- same rhythm as /vo. */
+            section {
+                padding-block: clamp(3.25rem, 6vw, 5.5rem);
+            }
+            #services {
+                background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+                border-top: 1px solid var(--line);
+            }
+            /* Tinted like #services so the section rhythm alternates
+               (services tinted, work plain, about tinted) -- otherwise #work
+               and #about share the plain background and run together. */
+            #about {
+                background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+                border-top: 1px solid var(--line);
+            }
+            .lead {
+                margin-bottom: clamp(1.6rem, 3vw, 2.2rem);
+            }
+            .lead h2 {
+                font-size: var(--fs-h2);
+                color: color-mix(in srgb, var(--accent) 35%, var(--text));
+            }
+            @media (prefers-color-scheme: dark) {
+                .lead h2 {
+                    color: color-mix(in srgb, var(--accent) 18%, var(--text));
+                }
+            }
+            :root[data-theme="light"] .lead h2 {
+                color: color-mix(in srgb, var(--accent) 35%, var(--text));
+            }
+            :root[data-theme="dark"] .lead h2 {
+                color: color-mix(in srgb, var(--accent) 18%, var(--text));
+            }
+            .lead-sub {
+                color: var(--muted);
+                font-size: var(--fs-sm);
+                margin: 0.5rem 0 0;
+                max-width: 54ch;
+            }
+
+            /* What I do -- the structural spine the old flat grid lacked: name
+               the offer before showing the work. Four capability tiles. */
+            .caps {
+                display: grid;
+                gap: clamp(1rem, 2.4vw, 1.6rem);
+                grid-template-columns: 1fr;
+            }
+            @media (min-width: 560px) {
+                .caps {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            @media (min-width: 900px) {
+                .caps {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+            .cap {
+                background: color-mix(in srgb, var(--accent) 5%, var(--panel));
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                padding: clamp(1.2rem, 2.4vw, 1.5rem);
+            }
+            .cap-ic {
+                display: grid;
+                place-items: center;
+                width: 2.4rem;
+                height: 2.4rem;
+                border-radius: 10px;
+                background: color-mix(in srgb, var(--accent) 12%, transparent);
+                color: var(--accent);
+                margin-bottom: 0.9rem;
+            }
+            .cap-ic svg {
+                width: 20px;
+                height: 20px;
+            }
+            .cap h3 {
+                font-size: var(--fs-base);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                margin: 0;
+            }
+            .cap p {
+                color: var(--muted);
+                font-size: var(--fs-sm);
+                margin: 0.4rem 0 0;
+            }
+
+            /* Selected work -- grouped by kind (broadcast / commercial / sound
+               design) instead of one undifferentiated dump. Each group gets a
+               subhead; cards link out to the piece on YouTube. */
+            .group {
+                margin-top: clamp(2.4rem, 5vw, 3.5rem);
+            }
+            .group:first-of-type {
+                margin-top: clamp(1.6rem, 3vw, 2.2rem);
+            }
+            .group-h {
+                display: flex;
+                align-items: baseline;
+                gap: 0.9rem;
+                margin: 0 0 clamp(1.1rem, 2.2vw, 1.6rem);
+            }
+            .group-h .n {
+                font-size: var(--fs-label);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: color-mix(in srgb, var(--accent) 70%, var(--text));
+                white-space: nowrap;
+            }
+            .group-h .rule {
+                flex: 1;
+                height: 1px;
+                background: var(--line);
+            }
+            .work-grid {
+                display: grid;
+                gap: clamp(1.1rem, 2.5vw, 1.8rem);
+                grid-template-columns: 1fr;
+            }
+            @media (min-width: 600px) {
+                .work-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            @media (min-width: 900px) {
+                .work-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+            /* Video cards -- self-hosted clips that play in place, same as /vo.
+               Poster is a frame pulled from the (bar-free) clip itself. */
+            .vcard {
+                display: flex;
+                flex-direction: column;
+                background: color-mix(in srgb, var(--accent) 5%, var(--panel));
+                border-radius: 14px;
+                overflow: hidden;
+                box-shadow: 0 4px 16px -10px rgba(0, 0, 0, 0.16);
+                transition:
+                    box-shadow 0.18s ease,
+                    transform 0.18s ease;
+            }
+            .vcard:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 16px 38px -20px rgba(0, 0, 0, 0.32);
+            }
+            .vcard video {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                display: block;
+                background: #000;
+                object-fit: cover;
+            }
+            .vmedia {
+                position: relative;
+                line-height: 0;
+            }
+            .vplay {
+                position: absolute;
+                inset: 0;
+                margin: auto;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: none;
+                background: var(--accent);
+                color: #fff;
+                display: grid;
+                place-items: center;
+                cursor: pointer;
+                box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+                transition:
+                    transform 0.15s ease,
+                    opacity 0.2s ease;
+            }
+            .vplay svg {
+                width: 24px;
+                height: 24px;
+                margin-left: 3px;
+            }
+            .vplay:hover {
+                transform: scale(1.09);
+            }
+            .vmedia.playing .vplay {
+                opacity: 0;
+                pointer-events: none;
+            }
+            .vdur {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.85);
+                color: #fff;
+                padding: 6px 8px;
+                border-radius: 6px;
+                font-size: var(--fs-label);
+                line-height: 1;
+                font-variant-numeric: tabular-nums;
+                transition: opacity 0.2s ease;
+            }
+            .vmedia.playing .vdur {
+                opacity: 0;
+            }
+            .vmeta {
+                padding: 1rem 1.1rem 1.2rem;
+            }
+            .vtag {
+                display: inline-block;
+                font-size: var(--fs-label);
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: color-mix(in srgb, var(--accent) 70%, var(--text));
+                margin-bottom: 0.4rem;
+            }
+            .vcard h3 {
+                font-size: var(--fs-base);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                margin: 0;
+            }
+            .vsub {
+                color: var(--muted);
+                font-size: var(--fs-sm);
+                margin: 0.35rem 0 0;
+                line-height: 1.5;
+            }
+            /* Credit reads as a footer line: a hairline sets it off from the
+               description above (both are low-contrast greys and blur together
+               otherwise). */
+            .vcred {
+                color: var(--faint);
+                font-size: var(--fs-label);
+                margin: 0.75rem 0 0;
+                padding-top: 0.75rem;
+                border-top: 1px solid var(--line);
+            }
+            /* First group leads with a wide feature card. */
+            .feature {
+                grid-column: 1 / -1;
+            }
+            @media (min-width: 760px) {
+                .feature {
+                    display: grid;
+                    grid-template-columns: 1.6fr 1fr;
+                    align-items: stretch;
+                }
+                .feature .vmedia,
+                .feature .vmedia video {
+                    height: 100%;
+                }
+                .feature .vmedia video {
+                    aspect-ratio: auto;
+                }
+                .feature .vmeta {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: clamp(1.4rem, 3.5vw, 2.6rem);
+                }
+                .feature h3 {
+                    font-size: var(--fs-h2);
+                }
+                .feature .vsub {
+                    font-size: var(--fs-base);
+                    margin-top: 0.7rem;
+                    max-width: 40ch;
+                }
+            }
+
+            /* About / studio -- reuses the /vo eng-list pattern. */
+            .about-grid {
+                display: grid;
+                gap: clamp(2rem, 5vw, 4rem);
+                grid-template-columns: 1fr;
+                align-items: start;
+            }
+            @media (min-width: 860px) {
+                .about-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            .about-grid .big {
+                font-size: var(--fs-h2);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                line-height: 1.25;
+                margin: 0;
+                max-width: 22ch;
+            }
+            .about-grid .muted {
+                color: var(--muted);
+                margin-top: 1.1rem;
+                max-width: 42ch;
+            }
+            .eng-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: grid;
+                gap: 1.3rem;
+            }
+            .eng-head {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            .eng-head strong {
+                font-weight: 600;
+            }
+            .eng-desc {
+                color: var(--muted);
+                font-size: var(--fs-sm);
+                margin: 0.4rem 0 0;
+                padding-left: calc(2.4rem + 1rem);
+            }
+            .eng-ic {
+                flex: none;
+                display: grid;
+                place-items: center;
+                width: 2.4rem;
+                height: 2.4rem;
+                border-radius: 10px;
+                background: color-mix(in srgb, var(--accent) 12%, transparent);
+                color: var(--accent);
+            }
+            .eng-ic svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            /* Contact band -- same shape as /vo, red instead of blue. */
+            .contact {
+                background:
+                    radial-gradient(
+                        100% 120% at 12% -10%,
+                        color-mix(in srgb, var(--accent) 26%, transparent),
+                        transparent 55%
+                    ),
+                    radial-gradient(
+                            rgba(255, 255, 255, 0.05) 1px,
+                            transparent 1.5px
+                        )
+                        0 0 / 22px 22px,
+                    var(--deep);
+                color: #fff;
+            }
+            .contact .headline {
+                font-size: var(--fs-h2);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                line-height: 1.4;
+                margin: 0;
+                /* A hard break after the email pins the two lines; the email's
+                   own nowrap keeps the address whole. Greedy (normal) wrap so a
+                   narrow screen fills line 1 before spilling. */
+                text-wrap: normal;
+            }
+            .contact a.mail {
+                font-size: inherit;
+                color: #fff;
+                text-decoration: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+                padding-bottom: 0.15em;
+                transition: border-color 0.15s ease;
+                /* Keep the address whole -- never split mid-email across lines. */
+                white-space: nowrap;
+            }
+            /* Highlight the email inside the big headline, like /vo -- an
+               accent-tinted tone so it stands out from the white sentence. */
+            .contact .headline .mail {
+                color: color-mix(in srgb, var(--accent2) 45%, #fff);
+                border-color: color-mix(in srgb, var(--accent2) 55%, transparent);
+            }
+            .contact .headline .mail:hover {
+                border-color: color-mix(in srgb, var(--accent2) 80%, #fff);
+            }
+            .contact a.mail:hover {
+                border-color: var(--accent2);
+            }
+            .contact-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem 3rem;
+                margin-top: 2.5rem;
+            }
+            .contact-meta div {
+                display: grid;
+                gap: 0.25rem;
+            }
+            .contact-meta .k {
+                font-size: var(--fs-label);
+                letter-spacing: 0.02em;
+                text-transform: uppercase;
+                color: color-mix(in srgb, var(--accent2) 28%, #fff);
+                font-weight: 600;
+            }
+            .contact-meta .v {
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .contact :focus-visible {
+                outline-color: #fff;
+            }
+
+            /* Footer -- cross-links to the other surfaces, like /vo. */
+            footer.site {
+                padding: 3rem 0 3.5rem;
+                border-top: 1px solid var(--line);
+            }
+            .foot {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem 2rem;
+                align-items: center;
+                justify-content: space-between;
+                color: var(--muted);
+                font-size: var(--fs-label);
+            }
+            .foot a {
+                color: var(--muted);
+                text-decoration: none;
+            }
+            .foot a:hover {
+                color: var(--text);
+            }
+            .foot .also {
+                display: flex;
+                gap: 1.4rem;
+                flex-wrap: wrap;
+            }
+            .foot .also a {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3em;
+            }
+            .foot .also a::after {
+                content: "\2197";
+                color: var(--faint);
+            }
+
+            /* Finesse -- scroll-in reveals, matched to /vo. */
+            @media (prefers-reduced-motion: no-preference) {
+                .reveal {
+                    opacity: 0;
+                    transform: translateY(18px);
+                    transition:
+                        opacity 0.7s cubic-bezier(0.2, 0.6, 0.2, 1),
+                        transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+                }
+                .reveal.in {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a class="skip" href="#top">Skip to content</a>
+
+        <header class="bar">
+            <div class="wrap bar-in">
+                <a class="brand" href="/" aria-label="Emily Audio, home"
+                    ><span class="brand-logo" aria-hidden="true"></span
+></a>
+                <nav class="top">
+                    <a class="nav-hide" href="#services">Services</a>
+                    <a class="nav-hide" href="#work">Work</a>
+                    <a class="nav-hide" href="#about">Studio</a>
+                    <a class="nav-hide" href="#contact">Contact</a>
+                    <button
+                        type="button"
+                        class="menuBtn"
+                        id="menuBtn"
+                        aria-label="Menu"
+                        aria-expanded="false"
+                        aria-controls="mobileMenu"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M4 7h16M4 12h16M4 17h16" />
+                        </svg>
+                    </button>
+                    <button
+                        type="button"
+                        class="toggle"
+                        id="themeBtn"
+                        aria-label="Switch light/dark theme"
+                        title="Theme"
+                    >
+                        <svg
+                            class="ico-moon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+                            />
+                        </svg>
+                        <svg
+                            class="ico-sun"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="12" cy="12" r="4" />
+                            <path
+                                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+                            />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+            <div class="mobile-menu" id="mobileMenu" hidden>
+                <a href="#services">Services</a>
+                <a href="#work">Work</a>
+                <a href="#about">Studio</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </header>
+
+        <main id="top">
+            <section class="hero">
+                <div class="wrap hero-inner">
+                    <div class="hero-copy">
+                        <h1>
+                            <span class="hl">Sound</span> that finishes the
+                            picture.
+                        </h1>
+                        <p class="sub">
+                            Sound design, mixing, sweetening, and dialogue
+                            editing for broadcast, film, and video games,
+                            handled by a trained engineer from first cut to final
+                            mix.
+                        </p>
+                        <p class="hero-cta">
+                            <a class="btn" href="#contact">Start a project</a>
+                        </p>
+                    </div>
+                    <div class="hero-photo">
+                        <img
+                            src="/image/em1_transparent.png"
+                            width="2257"
+                            height="3748"
+                            alt="Emily Bryner"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <section id="services" aria-labelledby="services-h">
+                <div class="wrap">
+                    <div class="lead">
+                        <h2 id="services-h">What I do</h2>
+                        <p class="lead-sub">
+                            Full-service audio post, one engineer across
+                            the whole job, so the sound stays coherent from spot
+                            to spot.
+                        </p>
+                    </div>
+                    <div class="caps">
+                        <div class="cap">
+                            <span class="cap-ic"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M3 12c3 0 3-7 6-7s3 14 6 14 3-7 6-7"
+                                    /></svg
+                            ></span>
+                            <h3>Sound design</h3>
+                            <p>
+                                Original effects and textures built to picture,
+                                from subtle sweetening to full soundscapes.
+                            </p>
+                        </div>
+                        <div class="cap">
+                            <span class="cap-ic"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M6 3v6M6 15v6M12 3v10M12 19v2" />
+                                    <path d="M18 3v2M18 11v10" />
+                                    <path
+                                        d="M3 12h6M9 16h6M15 8h6"
+                                    /></svg
+                            ></span>
+                            <h3>Mixing &amp; sweetening</h3>
+                            <p>
+                                Balanced, broadcast-ready mixes. Dialogue,
+                                music, and effects sitting where they belong.
+                            </p>
+                        </div>
+                        <div class="cap">
+                            <span class="cap-ic"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect
+                                        x="9"
+                                        y="3"
+                                        width="6"
+                                        height="11"
+                                        rx="3"
+                                    />
+                                    <path d="M6 11a6 6 0 0 0 12 0" />
+                                    <path d="M12 17v4M9 21h6" /></svg
+                            ></span>
+                            <h3>Dialogue &amp; ADR</h3>
+                            <p>
+                                Recording, editing, and cleanup for clean,
+                                intelligible dialogue cut to the frame.
+                            </p>
+                        </div>
+                        <div class="cap">
+                            <span class="cap-ic"
+                                ><svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M9 18V5l12-2v13" />
+                                    <circle cx="6" cy="18" r="3" />
+                                    <circle cx="18" cy="16" r="3" /></svg
+                            ></span>
+                            <h3>Music &amp; scoring</h3>
+                            <p>
+                                Original cues and music editing, arranged and
+                                placed to carry the story.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="work" aria-labelledby="work-h">
+                <div class="wrap">
+                    <div class="lead">
+                        <h2 id="work-h">Selected work</h2>
+                        <p class="lead-sub">
+                            A selection of audio work from over the years: sound
+                            design, sweetening, VO recording, mixing, and
+                            editing. Got something in the works? I&rsquo;d love
+                            to help. Reach out anytime.
+                        </p>
+                    </div>
+
+                    <!-- ponytail: work is rendered from the WORK array in the
+                         script below -- one place to reorder/relabel. Thumbnails
+                         pull from YouTube (i.ytimg.com); swap to self-hosted
+                         posters before launch for zero third-party requests. -->
+                    <div id="workGroups"></div>
+                </div>
+            </section>
+
+            <section id="about" aria-labelledby="about-h">
+                <h2 id="about-h" class="sr-only">Studio</h2>
+                <div class="wrap about-grid">
+                    <div>
+                        <p class="big">
+                            A trained engineer on the whole chain: record,
+                            design, edit, mix.
+                        </p>
+                        <p class="muted">
+                            Years of broadcast, commercial, and game post mean
+                            the sound arrives finished: clean dialogue,
+                            considered design, and a mix that translates from a
+                            phone speaker to a broadcast chain.
+                        </p>
+                    </div>
+                    <ul class="eng-list">
+                        <li>
+                            <div class="eng-head">
+                                <span class="eng-ic"
+                                    ><svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3" />
+                                        <path d="M2 14h4M10 8h4M18 12h4" /></svg
+                                ></span
+                                ><strong>Pro Tools, FMOD, Unity</strong>
+                            </div>
+                            <p class="eng-desc">
+                                Post mixed in Pro Tools; interactive game audio
+                                built in FMOD and Unity.
+                            </p>
+                        </li>
+                        <li>
+                            <div class="eng-head">
+                                <span class="eng-ic"
+                                    ><svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"
+                                        />
+                                        <path d="M14 3v5h5" />
+                                        <path d="m9.3 14.6 1.8 1.8 3.4-3.8" /></svg
+                                ></span
+                                ><strong>Deliver-ready files</strong>
+                            </div>
+                            <p class="eng-desc">
+                                Mixed and mastered to your spec: stems or
+                                stereo, leveled for the platform.
+                            </p>
+                        </li>
+                        <li>
+                            <div class="eng-head">
+                                <span class="eng-ic"
+                                    ><svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12 3l7 3v5c0 4.6-3.1 7.6-7 9-3.9-1.4-7-4.4-7-9V6z"
+                                        />
+                                        <path d="m9 12 2 2 4-4" /></svg
+                                ></span
+                                ><strong>One ear, whole job</strong>
+                            </div>
+                            <p class="eng-desc">
+                                Design, dialogue, and mix handled by the same
+                                engineer, so nothing drifts between passes.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="contact" class="contact" aria-labelledby="contact-h">
+                <h2 id="contact-h" class="sr-only">Contact</h2>
+                <div class="wrap">
+                    <p class="headline">
+                        Tell me about your project at
+                        <a class="mail" href="mailto:info@emilyaudio.com"
+                            >info@emilyaudio.com</a
+                        ><br />
+                        and let&rsquo;s finish it in sound.
+                    </p>
+                    <div class="contact-meta">
+                        <div>
+                            <span class="k">Scope</span
+                            ><span class="v"
+                                >Design &middot; Mixing &middot; Dialogue &middot;
+                                Music</span
+                            >
+                        </div>
+                        <div>
+                            <span class="k">Delivery</span
+                            ><span class="v">Stems or stereo, to spec</span>
+                        </div>
+                        <div>
+                            <span class="k">Tools</span
+                            ><span class="v">Pro Tools &middot; FMOD &middot; Unity</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site">
+            <div class="wrap foot">
+                <div class="also">
+                    <a href="/">Home</a><a href="/vo/">Voice-over</a>
+                </div>
+                <span
+                    >&copy; 2026 Emily Bryner &middot; Voice-over &amp; Audio
+                    Post-Production</span
+                >
+            </div>
+        </footer>
+
+        <script>
+            // Theme toggle lives in /base.js.
+
+            // Mobile nav: hamburger disclosure menu (only reachable < 760px).
+            // Same behaviour as /vo.
+            (function () {
+                var btn = document.getElementById("menuBtn"),
+                    menu = document.getElementById("mobileMenu");
+                if (!btn || !menu) return;
+                function setOpen(open) {
+                    menu.hidden = !open;
+                    btn.setAttribute("aria-expanded", open);
+                }
+                btn.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    setOpen(menu.hidden);
+                });
+                menu.addEventListener("click", function (e) {
+                    if (e.target.tagName === "A") setOpen(false);
+                });
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape" && !menu.hidden) {
+                        setOpen(false);
+                        btn.focus();
+                    }
+                });
+                document.addEventListener("click", function (e) {
+                    if (
+                        !menu.hidden &&
+                        !menu.contains(e.target) &&
+                        !btn.contains(e.target)
+                    )
+                        setOpen(false);
+                });
+            })();
+
+            // Selected work: rendered from data so the roster lives in one
+            // place. Each card links out to the piece on YouTube; the poster is
+            // that video's thumbnail. `feature` makes the first card span wide.
+            var WORK = [
+                {
+                    name: "Network packaging &amp; promos",
+                    items: [
+                        { id: "979anvKMhh0", tag: "Recording &amp; post &middot; FX", title: "Archer", cred: "ARCHER for FX &middot; Bluetube", sub: "Recorded and edited main and supporting characters across the early seasons, working directly with the creators on music selection and episode builds.", feature: true },
+                        { id: "mFu6XsjGeZg", tag: "Packaging", title: "Cartoon Network All Stars", cred: "AWESOME, INC. &middot; Bluetube", sub: "Bumper and show-open package for the network's All Stars block." },
+                        { id: "DarRqCI1PIk", tag: "Promo", title: "Cartoon Network World Cup", cred: "AWESOME, INC. &middot; Bluetube" },
+                        { id: "l2-tD_Qvh8I", tag: "Promo", title: "Boomerang World Cup", cred: "AWESOME, INC. &middot; Bluetube" },
+                        { id: "pEIsHfJEjBo", tag: "Packaging", title: "Cartoon Network Reface", cred: "AWESOME, INC. &middot; Bluetube" },
+                        { id: "PFB8r8FoCyw", tag: "Packaging", title: "Cartoon Network Heroes", cred: "AWESOME, INC. &middot; Bluetube" },
+                        { id: "H9i4Ogg9-cU", tag: "Broadcast", title: "CNN Jane Velez-Mitchell", cred: "Bluetube" },
+                        { id: "YhEaI-foR5M", tag: "Broadcast", title: "Nick@Nite Pop Quiz", cred: "Bluetube" }
+                    ]
+                },
+                {
+                    name: "Commercial &amp; corporate",
+                    items: [
+                        { id: "jeYSAlz1Ue4", tag: "Reel", title: "Commercial &amp; corporate reel", cred: "Various clients", sub: "Sizzles, spots, and internal marketing pieces. A sampler of past post work." },
+                        { id: "YAzD6SqNaqc", tag: "Directional audio", title: "Pilot Best Coffee", cred: "MIRA Design + Strategy", sub: "In-store spot mixed for directional speakers, audible only head-on." },
+                        { id: "b9UnFxU7JiA", tag: "Commercial", title: "BBVA Compass New Look", cred: "Sapient Nitro" },
+                        { id: "G8JsVF9Alqw", tag: "Commercial", title: "Santander", cred: "Sapient Nitro" },
+                        { id: "icl9EEpDvwM", tag: "Commercial", title: "Regions FanCam", cred: "Sapient Nitro" },
+                        { id: "ifwUlTTy4P0", tag: "Fan engagement", title: "Sports Platform", cred: "Sapient Nitro" }
+                    ]
+                },
+                {
+                    name: "Games &amp; sound design",
+                    items: [
+                        { id: "-Pik2ZIiaVo", tag: "Game promo", title: "The Sims 3 Teaser", cred: "Bluetube" },
+                        { id: "pVOGPsv_74w", tag: "Sound design", title: "Ripley's Poker Face", cred: "Bluetube", sub: "Music parts programmed for animatronics that toured Ripley's museums." }
+                    ]
+                }
+            ];
+            function card(it) {
+                // Self-hosted clip that plays in place; poster is a frame from
+                // the (bar-free) clip. Both live under clip/<id>.{mp4,jpg}.
+                return (
+                    '<article class="vcard' +
+                    (it.feature ? " feature" : "") +
+                    '">' +
+                    '<div class="vmedia">' +
+                    '<video preload="metadata" playsinline poster="clip/' +
+                    it.id +
+                    '.jpg"><source src="clip/' +
+                    it.id +
+                    '.mp4" type="video/mp4" /></video>' +
+                    '<button type="button" class="vplay" aria-label="Play ' +
+                    it.title +
+                    '"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>' +
+                    '<span class="vdur"></span>' +
+                    "</div>" +
+                    '<div class="vmeta"><span class="vtag">' +
+                    it.tag +
+                    "</span><h3>" +
+                    it.title +
+                    "</h3>" +
+                    (it.sub ? '<p class="vsub">' + it.sub + "</p>" : "") +
+                    '<p class="vcred">' +
+                    it.cred +
+                    "</p></div></article>"
+                );
+            }
+            document.getElementById("workGroups").innerHTML = WORK.map(
+                function (g) {
+                    return (
+                        '<div class="group"><div class="group-h"><span class="n">' +
+                        g.name +
+                        '</span><span class="rule"></span></div>' +
+                        '<div class="work-grid">' +
+                        g.items.map(card).join("") +
+                        "</div></div>"
+                    );
+                },
+            ).join("");
+
+            // Video cards play in place: click the overlay to play with sound;
+            // on capable pointers a muted preview runs on hover. Same behaviour
+            // as /vo, minus the cross-card coordination (these are independent).
+            (function () {
+                function fmtDur(t) {
+                    if (!isFinite(t)) return "";
+                    var mm = Math.floor(t / 60),
+                        ss = Math.floor(t % 60);
+                    return mm + ":" + (ss < 10 ? "0" : "") + ss;
+                }
+                var canHoverPreview =
+                    matchMedia("(hover: hover)").matches &&
+                    matchMedia("(prefers-reduced-motion: no-preference)")
+                        .matches;
+                document.querySelectorAll(".vmedia").forEach(function (m) {
+                    var v = m.querySelector("video"),
+                        b = m.querySelector(".vplay"),
+                        dur = m.querySelector(".vdur");
+                    var clicked = false; // true once the user clicks to play with sound.
+                    function setDur() {
+                        if (dur) dur.textContent = fmtDur(v.duration);
+                    }
+                    v.addEventListener("loadedmetadata", setDur);
+                    if (v.readyState >= 1) setDur();
+
+                    b.addEventListener("click", function () {
+                        clicked = true;
+                        v.muted = false;
+                        v.currentTime = 0;
+                        v.controls = true;
+                        v.play();
+                    });
+                    v.addEventListener("play", function () {
+                        if (clicked) {
+                            m.classList.add("playing");
+                            b.tabIndex = -1;
+                        }
+                    });
+                    v.addEventListener("pause", function () {
+                        m.classList.remove("playing");
+                        v.controls = false;
+                        b.tabIndex = 0;
+                    });
+                    v.addEventListener("ended", function () {
+                        m.classList.remove("playing");
+                        v.controls = false;
+                        clicked = false;
+                        b.tabIndex = 0;
+                    });
+
+                    if (canHoverPreview) {
+                        m.addEventListener("mouseenter", function () {
+                            if (clicked || !v.paused) return;
+                            v.muted = true;
+                            v.play().catch(function () {});
+                        });
+                        m.addEventListener("mouseleave", function () {
+                            if (clicked) return;
+                            v.pause();
+                            v.load(); // load() restores the poster.
+                        });
+                    }
+                });
+            })();
+
+            // Finesse: gentle scroll-in reveals (skipped when reduced motion is
+            // preferred or IntersectionObserver is missing).
+            if (
+                matchMedia("(prefers-reduced-motion: no-preference)").matches &&
+                "IntersectionObserver" in window
+            ) {
+                var io = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (en) {
+                            if (en.isIntersecting) {
+                                en.target.classList.add("in");
+                                io.unobserve(en.target);
+                            }
+                        });
+                    },
+                    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+                );
+                document
+                    .querySelectorAll(
+                        "#services .lead, .cap, #work .lead, .group, #about .about-grid > *, #contact .wrap > *",
+                    )
+                    .forEach(function (el, i) {
+                        el.classList.add("reveal");
+                        io.observe(el);
+                    });
+            }
+        </script>
+    </body>
+</html>

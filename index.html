@@ -30,6 +30,15 @@
 
             gtag("config", "G-H1J935NQPM");
         </script>
+        <script>
+            // Apply a saved theme before paint. With none, data-theme stays unset
+            // so base.css follows the OS live. Toggle + persistence live in /base.js.
+            try {
+                var t = localStorage.getItem("theme");
+                if (t === "light" || t === "dark")
+                    document.documentElement.setAttribute("data-theme", t);
+            } catch (e) {}
+        </script>
         <link rel="stylesheet" href="/base.css" />
         <script defer src="/base.js"></script>
         <style>
