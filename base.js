@@ -1,6 +1,7 @@
 // Light/dark theme toggle, shared by every page. Sets data-theme on <html>;
-// CSS in base.css does the rest. No persistence -- matches the page default
-// until the visitor clicks.
+// CSS in base.css does the rest. The choice persists in localStorage; the
+// inline head snippet on each page restores it before paint (this file is
+// deferred, so it can't restore without a flash).
 (function () {
     var btn = document.getElementById("themeBtn"),
         root = document.documentElement;
@@ -18,7 +19,9 @@
     }
     sync();
     btn.addEventListener("click", function () {
-        root.setAttribute("data-theme", isDark() ? "light" : "dark");
+        var next = isDark() ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
         sync();
     });
 })();

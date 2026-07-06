@@ -5,12 +5,15 @@
 
 /* ===== Design tokens ===== */
 :root {
-    --bg: #f4f8fb;
-    --panel: #ffffff;
-    --text: #001021;
-    --muted: #3d5561;
-    --faint: #5c7078;
-    --line: #dce6ec;
+    /* Dark is the base default, so an unqueryable client lands on dark. Light
+       is opted into below via prefers-color-scheme; a saved choice overrides
+       both via [data-theme]. */
+    --bg: #001021;
+    --panel: #13293d;
+    --text: #e9f2f6;
+    --muted: #9db0ba;
+    --faint: #94a7b1;
+    --line: #14313c;
     --photo-bg: color-mix(in srgb, var(--text) 40%, var(--panel));
     --sans:
         "Helvetica Neue", Helvetica, Arial, "Segoe UI", system-ui, sans-serif;
@@ -23,14 +26,14 @@
     --gutter: clamp(1.5rem, 5vw, 5rem);
     --maxw: 1120px;
 }
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
     :root {
-        --bg: #001021;
-        --panel: #13293d;
-        --text: #e9f2f6;
-        --muted: #9db0ba;
-        --faint: #94a7b1;
-        --line: #14313c;
+        --bg: #f4f8fb;
+        --panel: #ffffff;
+        --text: #001021;
+        --muted: #3d5561;
+        --faint: #5c7078;
+        --line: #dce6ec;
     }
 }
 :root[data-theme="light"] {
