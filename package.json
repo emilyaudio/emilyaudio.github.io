@@ -1,0 +1,14 @@
+{
+  "name": "emilyaudio.github.io",
+  "version": "1.0.0",
+  "description": "Dev-only accessibility tooling for the hand-written static site. The site itself has no build step and ships as plain HTML/CSS/JS -- these are devDependencies used by `make a11y`.",
+  "private": true,
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "axe-core": "^4.11.1",
+    "lighthouse": "^13.0.3",
+    "pa11y": "^9.1.1",
+    "puppeteer": "^24.39.1"
+  }
+}

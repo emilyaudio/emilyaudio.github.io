@@ -45,7 +45,7 @@
             /* Landing hub -- carries both accents (voice-over blue + audio
                red). Shared chrome lives in /base.css. */
             :root {
-                --vo: #1481ba;
+                --vo: #0f6d99;
                 --post: #b23a34;
                 /* A single shallow arc for the headline underline (masked, so
                    the colour comes from the element, not the SVG). Stretched
@@ -59,7 +59,7 @@
                 }
             }
             :root[data-theme="light"] {
-                --vo: #1481ba;
+                --vo: #0f6d99;
                 --post: #b23a34;
             }
             :root[data-theme="dark"] {
@@ -292,6 +292,9 @@
                 transform: translateX(4px);
             }
             @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
                 * {
                     transition: none !important;
                 }

@@ -49,11 +49,14 @@
         <script defer src="/base.js"></script>
         <style>
             /* Voice-over surface -- accent blue. Shared tokens + chrome live in
-               /base.css; only VO-specific tokens are defined here. */
+               /base.css; only VO-specific tokens are defined here. The waveform
+               tokens (--wave-off/--wave-on) are set explicitly, not derived from
+               --accent: the played/unplayed pair must clear WCAG 1.4.11 (3:1)
+               against each other and the track, which the accent alone can't. */
             :root {
-                --wave-off: #93a1ab;
-                --accent: #1481ba;
-                --wave-on: var(--accent);
+                --wave-off: #8a8a8a;
+                --accent: #0f6d99;
+                --wave-on: #06344a;
                 --accent2: #0caadc;
                 --deep: #106a9b;
                 --btn-bg: #001021;
@@ -63,7 +66,7 @@
                 :root {
                     --wave-off: #5c7a86;
                     --accent: #1fb6e4;
-                    --wave-on: var(--accent);
+                    --wave-on: #a9e2f8;
                     --accent2: #0caadc;
                     --deep: #106a9b;
                     --btn-bg: #e9f2f6;
@@ -71,9 +74,9 @@
                 }
             }
             :root[data-theme="light"] {
-                --wave-off: #93a1ab;
-                --accent: #1481ba;
-                --wave-on: var(--accent);
+                --wave-off: #8a8a8a;
+                --accent: #0f6d99;
+                --wave-on: #06344a;
                 --accent2: #0caadc;
                 --deep: #106a9b;
                 --btn-bg: #001021;
@@ -82,7 +85,7 @@
             :root[data-theme="dark"] {
                 --wave-off: #5c7a86;
                 --accent: #1fb6e4;
-                --wave-on: var(--accent);
+                --wave-on: #a9e2f8;
                 --accent2: #0caadc;
                 --deep: #106a9b;
                 --btn-bg: #e9f2f6;
@@ -160,7 +163,7 @@
                 border: none;
                 color: var(--muted);
                 cursor: pointer;
-                padding: 0.2rem;
+                padding: 0.3rem;
                 display: grid;
                 place-items: center;
             }
@@ -709,7 +712,6 @@
                 font-size: var(--fs-label);
                 letter-spacing: 0.02em;
                 text-transform: uppercase;
-                color: color-mix(in srgb, var(--accent) 70%, var(--text));
                 font-weight: 600;
             }
             .contact-meta .v {
@@ -737,7 +739,7 @@
                 border-color: var(--accent2);
             }
             .contact .k {
-                color: color-mix(in srgb, var(--accent2) 28%, #fff);
+                color: color-mix(in srgb, var(--accent2) 18%, #fff);
             }
             .contact .v {
                 color: rgba(255, 255, 255, 0.9);
@@ -1017,7 +1019,7 @@
                             ><button
                                 type="button"
                                 class="vplay"
-                                aria-label="Play video"
+                                aria-label="Play No Wrong Reason"
                             >
                                 <svg
                                     viewBox="0 0 24 24"
@@ -1052,7 +1054,7 @@
                                 ><button
                                     type="button"
                                     class="vplay"
-                                    aria-label="Play video"
+                                    aria-label="Play ViaPlus"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -1085,7 +1087,7 @@
                                 ><button
                                     type="button"
                                     class="vplay"
-                                    aria-label="Play video"
+                                    aria-label="Play City Legends 3"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -1118,7 +1120,7 @@
                                 ><button
                                     type="button"
                                     class="vplay"
-                                    aria-label="Play video"
+                                    aria-label="Play Let It Rain"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -1150,7 +1152,7 @@
                                 ><button
                                     type="button"
                                     class="vplay"
-                                    aria-label="Play video"
+                                    aria-label="Play Video game voice reel"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
