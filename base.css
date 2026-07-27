@@ -78,7 +78,10 @@ body {
     letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    /* No overflow-x here on purpose: html's clip (above) already contains the
+       full-bleed decorations. hidden on body would make body a scroll
+       container, which breaks position: sticky on any descendant and disables
+       scroll anchoring. */
 }
 body::after {
     content: "";
