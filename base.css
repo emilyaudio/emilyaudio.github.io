@@ -120,10 +120,14 @@ a {
     white-space: nowrap;
     border: 0;
 }
+/* Parked 72px above its focused position (12px - 72px = -60px, where it used
+   to sit via top). Animating transform rather than top keeps the slide off the
+   layout path -- same distance, same duration, no reflow per frame. */
 .skip {
     position: fixed;
     left: 12px;
-    top: -60px;
+    top: 12px;
+    transform: translateY(-72px);
     z-index: 100;
     background: var(--panel);
     color: var(--text);
@@ -131,10 +135,10 @@ a {
     border-radius: 8px;
     text-decoration: none;
     box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.4);
-    transition: top 0.15s ease;
+    transition: transform 0.15s ease;
 }
 .skip:focus {
-    top: 12px;
+    transform: none;
 }
 h1,
 h2,
