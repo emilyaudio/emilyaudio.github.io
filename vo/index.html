@@ -1425,6 +1425,17 @@
                     ? "Stop"
                     : "Play all";
             }
+            // A demo that 404s or fails to decode would otherwise fail
+            // silently: the row never enters .playing, so it keeps looking
+            // playable and nothing is said. #nowPlaying is the sr-only live
+            // region the player already uses for track changes, so failures
+            // are announced there too. The row is left operable -- a retry
+            // costs one more click.
+            function announceFailure(cat) {
+                var live = document.getElementById("nowPlaying");
+                if (live) live.textContent = cat + " demo could not be played.";
+                refresh();
+            }
             function play(idx) {
                 if (idx < 0 || idx >= tracks.length) return;
                 if (currentIndex !== idx && currentIndex >= 0)
@@ -1435,7 +1446,9 @@
                 tracks[idx].audio
                     .play()
                     .then(refresh)
-                    .catch(function () {});
+                    .catch(function () {
+                        announceFailure(tracks[idx].cat);
+                    });
                 refresh();
             }
             function toggle(idx) {
@@ -1535,6 +1548,17 @@
                 });
                 audio.addEventListener("ended", function () {
                     onEnded(idx);
+                });
+                // Fires on load failure, which happens independently of any
+                // play() call -- preload="metadata" can 404 long before a
+                // click. Announce only when this is the track the visitor
+                // asked for (a failure mid-playback, or a load that fails
+                // after the click): announcing a background preload failure
+                // would interrupt a screen reader about a demo nobody
+                // requested, and if they do request it, play() rejects and
+                // announces then.
+                audio.addEventListener("error", function () {
+                    if (idx === currentIndex) announceFailure(d.cat);
                 });
                 row.querySelector(".play").addEventListener(
                     "click",
