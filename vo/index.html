@@ -687,16 +687,18 @@
                     transparent
                 );
             }
+            /* The contact band is always the deep ink panel, so the link is
+               styled against that ground directly -- no light/dark variant. */
             .contact a.mail {
                 font-size: var(--fs-base);
-                color: var(--text);
+                color: #fff;
                 text-decoration: none;
-                border-bottom: 1px solid var(--line);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.4);
                 padding-bottom: 0.15em;
                 transition: border-color 0.15s ease;
             }
             .contact a.mail:hover {
-                border-color: var(--accent);
+                border-color: var(--accent2);
             }
             .contact-meta {
                 display: flex;
@@ -730,13 +732,6 @@
                         0 0 / 154px 154px,
                     var(--deep);
                 color: #fff;
-            }
-            .contact a.mail {
-                color: #fff;
-                border-color: rgba(255, 255, 255, 0.4);
-            }
-            .contact a.mail:hover {
-                border-color: var(--accent2);
             }
             .contact .k {
                 color: color-mix(in srgb, var(--accent2) 18%, #fff);
