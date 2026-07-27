@@ -91,15 +91,28 @@
         });
 
         if (canHoverPreview) {
+            // Wait for intent before fetching. /audio puts sixteen cards in one
+            // grid, so a mouse crossing it used to start a dozen playbacks and
+            // abort them again a few pixels later. 120ms is below the threshold
+            // where a deliberate hover feels delayed, and above the time a
+            // sweep spends over any one card.
+            var previewTimer = null;
             m.addEventListener("mouseenter", function () {
                 if (clicked || !v.paused) {
                     return;
                 }
-                v.muted = true;
-                v.play().catch(function () {});
+                previewTimer = setTimeout(function () {
+                    previewTimer = null;
+                    v.muted = true;
+                    v.play().catch(function () {});
+                }, 120);
             });
             m.addEventListener("mouseleave", function () {
-                if (clicked) {
+                clearTimeout(previewTimer);
+                previewTimer = null;
+                // Nothing started, so there is nothing to tear down -- calling
+                // load() here would re-request the video the delay just saved.
+                if (clicked || v.paused) {
                     return;
                 }
                 v.pause();

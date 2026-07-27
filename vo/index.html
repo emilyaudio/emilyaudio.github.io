@@ -234,7 +234,7 @@
                 border-radius: 100px;
                 padding: 0.8em 1.4em;
                 line-height: 1;
-                transition: opacity 0.15s ease;
+                transition: opacity 0.15s var(--ease-out);
             }
             .btn:hover {
                 opacity: 0.85;
@@ -330,8 +330,8 @@
                 padding: 0.36rem 0.85rem;
                 cursor: pointer;
                 transition:
-                    border-color 0.15s ease,
-                    color 0.15s ease;
+                    border-color 0.15s var(--ease-out),
+                    color 0.15s var(--ease-out);
             }
             .playall:hover {
                 border-color: var(--accent);
@@ -366,9 +366,14 @@
                 margin-inline: -0.9rem;
                 padding-inline: 0.9rem;
                 border-radius: 10px;
-                transition: background 0.15s ease;
+                transition: background 0.15s var(--ease-out);
             }
-            .reel:hover {
+            /* Keyboard users move through the play button, the seek slider and
+               the download link inside a row, so the row highlight has to
+               follow focus as well as the pointer -- otherwise there is
+               nothing telling you which of five rows you are in. */
+            .reel:hover,
+            .reel:focus-within {
                 background: color-mix(in srgb, var(--text) 4%, transparent);
             }
             .reel:last-child {
@@ -393,7 +398,7 @@
                 cursor: pointer;
                 display: grid;
                 place-items: center;
-                transition: opacity 0.15s ease;
+                transition: opacity 0.15s var(--ease-out);
             }
             .play:hover {
                 opacity: 0.85;
@@ -546,8 +551,8 @@
                 overflow: hidden;
                 box-shadow: 0 4px 16px -10px rgba(0, 0, 0, 0.16);
                 transition:
-                    box-shadow 0.18s ease,
-                    transform 0.18s ease;
+                    box-shadow 0.18s var(--ease-out),
+                    transform 0.18s var(--ease-out);
             }
             .vcard:hover {
                 transform: translateY(-3px);
@@ -680,7 +685,13 @@
             }
             .contact .headline .mail {
                 font-size: inherit;
-                color: color-mix(in srgb, var(--accent2) 40%, #fff);
+                /* Mixed toward white, not toward the accent: this cyan against
+                   the --deep blue band is a narrow luminance gap, so more
+                   accent means less contrast (40% measures 3.95:1, 45% only
+                   3.76). 25% clears 4.5:1 and stops the address reading dimmer
+                   than the headline it sits in. /audio's warmer pair has room
+                   to spare at 45%, which is why the two differ. */
+                color: color-mix(in srgb, var(--accent2) 25%, #fff);
                 border-color: color-mix(
                     in srgb,
                     var(--accent2) 40%,
@@ -695,7 +706,7 @@
                 text-decoration: none;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.4);
                 padding-bottom: 0.15em;
-                transition: border-color 0.15s ease;
+                transition: border-color 0.15s var(--ease-out);
             }
             .contact a.mail:hover {
                 border-color: var(--accent2);
@@ -784,8 +795,8 @@
                     opacity: 0;
                     transform: translateY(18px);
                     transition:
-                        opacity 0.7s cubic-bezier(0.2, 0.6, 0.2, 1),
-                        transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+                        opacity 0.7s var(--ease-out),
+                        transform 0.7s var(--ease-out);
                 }
                 .reveal.in {
                     opacity: 1;
@@ -806,15 +817,15 @@
                 border-radius: 2px;
                 transform: scaleX(0);
                 transform-origin: left;
-                transition: transform 0.25s cubic-bezier(0.2, 0.6, 0.2, 1);
+                transition: transform 0.25s var(--ease-out);
             }
             nav.top a:hover::after {
                 transform: scaleX(1);
             }
             .btn {
                 transition:
-                    opacity 0.15s ease,
-                    transform 0.15s ease;
+                    opacity 0.15s var(--ease-out),
+                    transform 0.15s var(--ease-out);
             }
             .btn:hover {
                 transform: translateY(-1px);

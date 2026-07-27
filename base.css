@@ -14,6 +14,10 @@
     --muted: #9db0ba;
     --faint: #94a7b1;
     --line: #14313c;
+    /* Declared per theme, not once: --text flips from near-black to near-white
+       between them, so a single ratio moves the frame in opposite directions.
+       Dark keeps the heavier 40% mix -- the subject wears black, and a paler
+       frame here would cost the silhouette its edge. */
     --photo-bg: color-mix(in srgb, var(--text) 40%, var(--panel));
     --sans:
         "Helvetica Neue", Helvetica, Arial, "Segoe UI", system-ui, sans-serif;
@@ -25,24 +29,37 @@
     --fs-h2: clamp(1.5rem, 3vw, 2.1rem);
     --gutter: clamp(1.5rem, 5vw, 5rem);
     --maxw: 1120px;
+    /* One curve for every state change on the site. Browser-default `ease`
+       front-loads slowly and reads mushy on a 150ms hover; this leaves
+       immediately and settles, which is what a response to a pointer should
+       feel like. It was already the curve chosen by hand for the reveals and
+       the nav underline -- naming it just stops the other 23 transitions
+       falling back to the default. */
+    --ease-out: cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 @media (prefers-color-scheme: light) {
     :root {
         --bg: #f4f8fb;
-        --panel: #ffffff;
+        /* --bg lifted three steps toward white, keeping the ramp's cool cast
+           rather than resetting to #fff. Panels are the lightest surface, but
+           they belong to the palette; it also tints the top of the body
+           gradient, which is the largest area on the page. */
+        --panel: #f7fbff;
         --text: #001021;
         --muted: #3d5561;
         --faint: #5c7078;
         --line: #dce6ec;
+        --photo-bg: color-mix(in srgb, var(--text) 26%, var(--panel));
     }
 }
 :root[data-theme="light"] {
     --bg: #f4f8fb;
-    --panel: #ffffff;
+    --panel: #f7fbff;
     --text: #001021;
     --muted: #3d5561;
     --faint: #5c7078;
     --line: #dce6ec;
+    --photo-bg: color-mix(in srgb, var(--text) 26%, var(--panel));
 }
 :root[data-theme="dark"] {
     --bg: #001021;
@@ -51,6 +68,9 @@
     --muted: #9db0ba;
     --faint: #94a7b1;
     --line: #14313c;
+    /* Restated because the light @media block above still matches when a
+       visitor on a light-preference machine picks dark by hand. */
+    --photo-bg: color-mix(in srgb, var(--text) 40%, var(--panel));
 }
 
 /* ===== Reset & base ===== */
@@ -135,7 +155,7 @@ a {
     border-radius: 8px;
     text-decoration: none;
     box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.4);
-    transition: transform 0.15s ease;
+    transition: transform 0.15s var(--ease-out);
 }
 .skip:focus {
     transform: none;
@@ -299,8 +319,8 @@ nav.top a:hover {
     cursor: pointer;
     box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
     transition:
-        transform 0.15s ease,
-        opacity 0.2s ease;
+        transform 0.15s var(--ease-out),
+        opacity 0.2s var(--ease-out);
 }
 .vplay svg {
     width: 24px;
@@ -327,7 +347,7 @@ nav.top a:hover {
     font-size: var(--fs-label);
     line-height: 1;
     font-variant-numeric: tabular-nums;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s var(--ease-out);
 }
 .vmedia.playing .vdur {
     opacity: 0;

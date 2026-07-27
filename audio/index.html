@@ -68,7 +68,10 @@
                 --btn-fg: #ffffff;
                 /* Warm light neutrals. */
                 --bg: #faf5f3;
-                --panel: #ffffff;
+                /* Same rule as base.css -- --bg lifted three steps toward
+                   white -- applied to the warm ramp, so the panels stay warm
+                   instead of dropping back to the shared cool white. */
+                --panel: #fdf9f7;
                 --text: #1c0c0a;
                 --muted: #6a4a44;
                 --faint: #8a655e;
@@ -97,7 +100,7 @@
                 --btn-bg: #1c0c0a;
                 --btn-fg: #ffffff;
                 --bg: #faf5f3;
-                --panel: #ffffff;
+                --panel: #fdf9f7;
                 --text: #1c0c0a;
                 --muted: #6a4a44;
                 --faint: #8a655e;
@@ -191,7 +194,7 @@
                 border-radius: 2px;
                 transform: scaleX(0);
                 transform-origin: left;
-                transition: transform 0.25s cubic-bezier(0.2, 0.6, 0.2, 1);
+                transition: transform 0.25s var(--ease-out);
             }
             nav.top a:hover::after {
                 transform: scaleX(1);
@@ -213,8 +216,8 @@
                 padding: 0.8em 1.4em;
                 line-height: 1;
                 transition:
-                    opacity 0.15s ease,
-                    transform 0.15s ease;
+                    opacity 0.15s var(--ease-out),
+                    transform 0.15s var(--ease-out);
             }
             .btn:hover {
                 opacity: 0.85;
@@ -416,8 +419,8 @@
                 overflow: hidden;
                 box-shadow: 0 4px 16px -10px rgba(0, 0, 0, 0.16);
                 transition:
-                    box-shadow 0.18s ease,
-                    transform 0.18s ease;
+                    box-shadow 0.18s var(--ease-out),
+                    transform 0.18s var(--ease-out);
             }
             .vcard:hover {
                 transform: translateY(-3px);
@@ -591,7 +594,7 @@
                 text-decoration: none;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.4);
                 padding-bottom: 0.15em;
-                transition: border-color 0.15s ease;
+                transition: border-color 0.15s var(--ease-out);
                 /* Keep the address whole -- never split mid-email across lines. */
                 white-space: nowrap;
             }
@@ -673,8 +676,8 @@
                     opacity: 0;
                     transform: translateY(18px);
                     transition:
-                        opacity 0.7s cubic-bezier(0.2, 0.6, 0.2, 1),
-                        transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+                        opacity 0.7s var(--ease-out),
+                        transform 0.7s var(--ease-out);
                 }
                 .reveal.in {
                     opacity: 1;
@@ -1296,7 +1299,14 @@
                 );
                 document
                     .querySelectorAll(
-                        "#services .lead, .cap, #work .lead, .group, #about .about-grid > *, #contact .wrap > *",
+                        // The services section stays put: its lead and its four
+                        // capability tiles were five of the fourteen things
+                        // fading up on this page, and animating a row of four
+                        // in sequence is the twitchiest part of the scroll.
+                        // What is left matches /vo's scope -- the work
+                        // groups get the orchestrated entrance, the rest is
+                        // just there.
+                        "#work .lead, .group, #about .about-grid > *, #contact .wrap > *",
                     )
                     .forEach(function (el, i) {
                         el.classList.add("reveal");

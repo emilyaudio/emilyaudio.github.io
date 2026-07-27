@@ -201,9 +201,9 @@
                 overflow: hidden;
                 isolation: isolate;
                 transition:
-                    transform 0.18s ease,
-                    box-shadow 0.18s ease,
-                    border-color 0.18s ease;
+                    transform 0.18s var(--ease-out),
+                    box-shadow 0.18s var(--ease-out),
+                    border-color 0.18s var(--ease-out);
             }
             /* Delicate accent-tinted grain, strongest in the bottom-right and
                fading out toward the copy. Each surface gets its own grain:
@@ -286,7 +286,7 @@
             }
             .cta .arrow {
                 display: inline-block;
-                transition: transform 0.18s ease;
+                transition: transform 0.18s var(--ease-out);
             }
             .card:hover .cta .arrow {
                 transform: translateX(4px);
