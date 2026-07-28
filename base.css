@@ -39,6 +39,13 @@
     --fs-h2: clamp(1.5rem, 3vw, 2.1rem);
     --gutter: clamp(1.5rem, 5vw, 5rem);
     --maxw: 1120px;
+    /* Gap above the hero headline. A token, not a `.hero` rule -- `.hero` means
+       something different on the hub than on the two portfolios, so its rules
+       cannot live here. The value must agree across all three surfaces: the
+       three pages line their .hero-copy up to the pixel, so this margin alone
+       decides where the headline starts, and it had drifted to 0.25rem on the
+       hub, putting that headline 12px above the other two at every width. */
+    --hero-h1-gap: 1rem;
     /* One curve for every state change on the site. Browser-default `ease`
        front-loads slowly and reads mushy on a 150ms hover; this leaves
        immediately and settles, which is what a response to a pointer should

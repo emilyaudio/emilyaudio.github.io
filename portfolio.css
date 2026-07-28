@@ -151,7 +151,7 @@ nav.top a:hover::after {
     font-size: var(--fs-h1);
     line-height: 1.05;
     letter-spacing: -0.03em;
-    margin: 1rem 0 0;
+    margin: var(--hero-h1-gap) 0 0;
     text-wrap: balance;
 }
 .hero h1 .hl {
