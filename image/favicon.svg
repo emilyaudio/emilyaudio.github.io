@@ -4,27 +4,23 @@
          document, an SVG with only a viewBox gets Chrome's default size, and
          the 32x32 screenshot viewport then captures one magnified corner. The
          viewBox still governs scaling wherever it is used as an icon. -->
-    <!-- Four waveform bars, full-bleed so the mark stays legible in a 16px tab:
-         two in the voice-over blue, two in the audio-post red. Same two-accent
-         identity the hub carries, reduced to the fewest shapes that survive at
-         tab size (the emily AUDIO logo's script and cables turn to mush there).
-         Colours are base.css's per-theme --vo / --post; the media query is
-         inside the file because an SVG favicon is rendered by the browser
-         chrome, where the page's CSS cannot reach it. Dark values are the
-         defaults, matching base.css. -->
+    <!-- Four waveform bars, one colour: base.css's --text, which is off-white
+         in dark and off-black in light -- never pure #fff/#000. The media query
+         lives inside the file because an SVG favicon is rendered by the browser
+         chrome, where the page's CSS cannot reach it; dark is the default, as
+         in base.css. Reduced to the fewest shapes that survive at tab size --
+         the emily AUDIO logo's script and cables turn to mush at 16px. -->
     <style>
-        .vo { fill: #1fb6e4; }
-        .post { fill: #e0685c; }
+        .bar { fill: #e9f2f6; }
         @media (prefers-color-scheme: light) {
-            .vo { fill: #0f6d99; }
-            .post { fill: #b23a34; }
+            .bar { fill: #001021; }
         }
     </style>
     <!-- 3.5px side inset against the tallest bar's 3px top/bottom -- optically
          even, and it stops the outer bars clipping when the 32px grid is
          downsampled to 16 for the .ico. -->
-    <rect class="vo" x="3.5" y="9.5" width="4" height="13" rx="2" />
-    <rect class="vo" x="10.5" y="3" width="4" height="26" rx="2" />
-    <rect class="post" x="17.5" y="6.5" width="4" height="19" rx="2" />
-    <rect class="post" x="24.5" y="10.5" width="4" height="11" rx="2" />
+    <rect class="bar" x="3.5" y="9.5" width="4" height="13" rx="2" />
+    <rect class="bar" x="10.5" y="3" width="4" height="26" rx="2" />
+    <rect class="bar" x="17.5" y="6.5" width="4" height="19" rx="2" />
+    <rect class="bar" x="24.5" y="10.5" width="4" height="11" rx="2" />
 </svg>

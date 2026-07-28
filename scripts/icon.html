@@ -11,9 +11,11 @@
 
                1. An <img> of favicon.svg would inherit that file's
                   prefers-color-scheme query. A .ico and an apple-touch-icon
-                  each carry ONE fixed palette, so both are pinned to the dark
-                  accents -- the pair that holds up on light and dark chrome
-                  alike, and on this navy.
+                  each carry ONE fixed palette, and a one-colour mark cannot
+                  pick a tone that works transparently on both light and dark
+                  chrome -- whichever it picks, it vanishes against the matching
+                  one. So both rasters ship as an opaque tile: the off-white
+                  mark on the site's --bg navy, legible on any chrome.
                2. Headless Chrome on macOS floors the layout viewport at ~485px
                   (see the `shot` target's note in the Makefile). A standalone
                   SVG document gets stretched to that floor and the screenshot
@@ -29,8 +31,10 @@
             .plate {
                 display: grid;
                 place-items: center;
+                background: #001021;
             }
-            /* ?v=ico -- transparent, mark full-bleed, downscaled to 32 + 16. */
+            /* ?v=ico -- downscaled to 32 + 16. The mark is inset less than the
+               touch icon's: at 16px there is no room to spend on margin. */
             [data-v="ico"] .plate {
                 width: 32px;
                 height: 32px;
@@ -39,12 +43,11 @@
                 width: 32px;
                 height: 32px;
             }
-            /* ?v=touch -- iOS never honours transparency and applies its own
-               rounded mask, so this ships opaque on the site's --bg, inset. */
+            /* ?v=touch -- iOS applies its own rounded mask and never honours
+               transparency, so the mark sits well inside the tile. */
             [data-v="touch"] .plate {
                 width: 180px;
                 height: 180px;
-                background: #001021;
             }
             [data-v="touch"] svg {
                 width: 108px;
@@ -53,11 +56,8 @@
             svg {
                 display: block;
             }
-            .vo {
-                fill: #1fb6e4;
-            }
-            .post {
-                fill: #e0685c;
+            .bar {
+                fill: #e9f2f6;
             }
         </style>
     </head>
@@ -65,7 +65,7 @@
         <div class="plate">
             <svg viewBox="0 0 32 32" aria-hidden="true">
                 <rect
-                    class="vo"
+                    class="bar"
                     x="3.5"
                     y="9.5"
                     width="4"
@@ -73,7 +73,7 @@
                     rx="2"
                 />
                 <rect
-                    class="vo"
+                    class="bar"
                     x="10.5"
                     y="3"
                     width="4"
@@ -81,7 +81,7 @@
                     rx="2"
                 />
                 <rect
-                    class="post"
+                    class="bar"
                     x="17.5"
                     y="6.5"
                     width="4"
@@ -89,7 +89,7 @@
                     rx="2"
                 />
                 <rect
-                    class="post"
+                    class="bar"
                     x="24.5"
                     y="10.5"
                     width="4"

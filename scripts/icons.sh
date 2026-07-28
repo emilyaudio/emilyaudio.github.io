@@ -34,14 +34,14 @@ fi
 # downscaled: the bars carry 2.5px corner radii at 32px, which alias badly
 # rendered straight at target size.
 #
-# --default-background-color=00000000 keeps the .ico transparent; without it
-# Chrome paints the page white and the icon ships with a white block behind it.
+# Both ship as opaque tiles -- the mark is one colour, and a transparent
+# one-colour icon vanishes against whichever chrome matches its tone. The plate
+# comes from icon.html, so no background flag is needed here.
 "$chrome" --headless=new --disable-gpu --hide-scrollbars \
     --force-device-scale-factor=4 --window-size=32,32 \
-    --default-background-color=00000000 --screenshot="$tmp/mark.png" \
+    --screenshot="$tmp/mark.png" \
     "file://$root/scripts/icon.html?v=ico" >/dev/null 2>&1
-magick "$tmp/mark.png" -background none \
-    -define icon:auto-resize=32,16 "$root/favicon.ico"
+magick "$tmp/mark.png" -define icon:auto-resize=32,16 "$root/favicon.ico"
 echo "wrote favicon.ico (32 + 16 px)"
 
 "$chrome" --headless=new --disable-gpu --hide-scrollbars \

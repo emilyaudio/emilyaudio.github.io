@@ -26,6 +26,25 @@ if ! command -v magick >/dev/null 2>&1; then
     exit 1
 fi
 
+# The card grounds itself on a verbatim copy of index.html's .hero-wave path, so
+# the two can drift. Compare them before rendering. Both greps are checked for a
+# non-empty result first: a pattern that stopped matching and a genuine
+# zero-match are byte-identical, and "" == "" would report the copies as
+# agreeing when in fact neither was found.
+wave_of() { grep -o 'd="M0 55 [^"]*"' "$1" | head -1; }
+hub_wave="$(wave_of "$root/index.html")"
+card_wave="$(wave_of "$root/scripts/og-card.html")"
+if [[ -z "$hub_wave" || -z "$card_wave" ]]; then
+    echo "hero-wave path not found (hub: ${#hub_wave} chars, card: ${#card_wave})" >&2
+    echo "Did the .hero-wave markup in index.html change shape?" >&2
+    exit 1
+fi
+if [[ "$hub_wave" != "$card_wave" ]]; then
+    echo "hero-wave path differs between index.html and scripts/og-card.html" >&2
+    echo "Re-copy it into the card's .band <path>, then rerun." >&2
+    exit 1
+fi
+
 for v in hub vo audio; do
     # --allow-file-access-from-files is required, not optional: the brand mark
     # is a CSS mask, and Chrome blocks mask images loaded over file:// without
