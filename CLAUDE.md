@@ -9,12 +9,24 @@ A neutral hub (`index.html`) routing to two standalone portfolios: voice-over
 its own -- they cross-link but don't share nav or contact.
 
 ## Design: shared chrome + per-surface accent
-Shared chrome -- design tokens, reset, header (brand + theme toggle), and the
-portrait component -- lives in `base.css`, linked by every page; the theme
-toggle is `base.js`. Edit a shared thing once there and the hub, `/vo`, and
-`/audio` all pick it up. Don't re-copy shared rules into a page's inline
-`<style>`; page `<style>` blocks hold only page-specific styles (and
-page-specific tokens: hub `--vo`/`--post`, vo `--accent` etc.).
+Shared CSS lives in two stylesheets. `base.css` is linked by every page and
+holds what all three surfaces share: design tokens, reset, header (brand +
+theme toggle), the portrait component, and the video-card player; the theme
+toggle is `base.js`. `portfolio.css` is linked by `/vo` and `/audio` only
+(after `base.css`, before the page's `<style>`) and holds what those two share
+but the hub does not: hero furniture, section rhythm, work cards, About,
+contact band, footer. The split is not cosmetic -- the hub reuses `.hero`,
+`.hero h1`, `.lead`, `.foot` and `footer.site` for different things, so those
+rules cannot go in `base.css`.
+
+Edit a shared thing once in the right file. Don't re-copy shared rules into a
+page's inline `<style>`; page `<style>` blocks hold only page-specific styles
+(and page-specific tokens: hub `--vo`/`--post`, vo `--accent` etc.).
+
+Before moving another rule into a shared file, check the cascade: a rule is
+only safe to lift if the page keeps no rule with the same selector and
+specificity that has to beat it. Media queries add no specificity -- that is
+why `@media (min-width: 820px) { .hero-inner }` stays inline on both pages.
 
 `vo/index.html` stays the reference for page-specific conventions (type,
 spacing, section patterns) -- read its `<style>` block for those. New surfaces

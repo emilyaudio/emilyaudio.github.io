@@ -22,6 +22,11 @@
     --sans:
         "Helvetica Neue", Helvetica, Arial, "Segoe UI", system-ui, sans-serif;
     --fs-label: 0.8rem;
+    /* One tracking for every uppercase micro-label at --fs-label (work-card
+       tags, the reels head, the work-group numbers, the contact keys). They had
+       drifted to 0.06em / 0.08em / 0.02em for the same role. The hub's .kicker
+       stays wider on purpose -- it labels a route, not a field. */
+    --tracking-label: 0.08em;
     --fs-sm: 0.92rem;
     --fs-base: 1rem;
     --fs-lead: clamp(1rem, 2.2vw, 1.2rem);

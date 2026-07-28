@@ -68,13 +68,19 @@
             } catch (e) {}
         </script>
         <link rel="stylesheet" href="/base.css" />
+        <link rel="stylesheet" href="/portfolio.css" />
         <script defer src="/base.js"></script>
         <style>
-            /* Voice-over surface -- accent blue. Shared tokens + chrome live in
-               /base.css; only VO-specific tokens are defined here. The waveform
-               tokens (--wave-off/--wave-on) are set explicitly, not derived from
-               --accent: the played/unplayed pair must clear WCAG 1.4.11 (3:1)
-               against each other and the track, which the accent alone can't. */
+            /* Voice-over surface -- accent blue. Shared tokens and chrome live
+               in /base.css; everything this page has in common with /audio is
+               in /portfolio.css. What stays here is VO-only: the tokens below,
+               the header volume control, the reel rows, and the handful of
+               places where this page and /audio genuinely differ.
+
+               The waveform tokens (--wave-off/--wave-on) are set explicitly,
+               not derived from --accent: the played/unplayed pair must clear
+               WCAG 1.4.11 (3:1) against each other and the track, which the
+               accent alone can't. */
             :root {
                 --wave-off: #8a8a8a;
                 --accent: #0f6d99;
@@ -115,66 +121,8 @@
             }
 
 
-            /* Header -- extras beyond the shared brand/toggle in base.css. */
-            .menuBtn {
-                display: grid;
-                place-items: center;
-                background: transparent;
-                border: none;
-                color: var(--muted);
-                cursor: pointer;
-                padding: 0.3rem;
-            }
-            .menuBtn:hover {
-                color: var(--text);
-            }
-            .menuBtn svg {
-                width: 22px;
-                height: 22px;
-            }
-            .mobile-menu {
-                position: absolute;
-                top: calc(100% - 12px);
-                right: var(--gutter);
-                z-index: 50;
-                display: grid;
-                gap: 0.15rem;
-                min-width: 170px;
-                background: var(--panel);
-                border: 1px solid var(--line);
-                border-radius: 12px;
-                padding: 0.5rem;
-                box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.4);
-            }
-            .mobile-menu[hidden] {
-                display: none;
-            }
-            .mobile-menu a {
-                text-decoration: none;
-                color: var(--text);
-                font-size: var(--fs-sm);
-                padding: 0.6rem 0.75rem;
-                border-radius: 8px;
-            }
-            .mobile-menu a:hover,
-            .mobile-menu a:focus-visible {
-                background: color-mix(in srgb, var(--text) 6%, transparent);
-            }
-            @media (min-width: 760px) {
-                .menuBtn,
-                .mobile-menu {
-                    display: none !important;
-                }
-            }
-            .nav-hide {
-                display: none;
-            }
-            @media (min-width: 760px) {
-                .nav-hide {
-                    display: inline;
-                }
-            }
-            /* Header volume — subtle */
+            /* Header volume — subtle. The rest of the header (menu button,
+               mobile menu, nav underline) is shared -- see portfolio.css. */
             .vol {
                 display: flex;
                 align-items: center;
@@ -241,32 +189,8 @@
                 }
             }
 
-            .btn {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.6em;
-                background: var(--btn-bg);
-                color: var(--btn-fg);
-                font: inherit;
-                font-weight: 600;
-                font-size: var(--fs-sm);
-                text-decoration: none;
-                cursor: pointer;
-                border: none;
-                border-radius: 100px;
-                padding: 0.8em 1.4em;
-                line-height: 1;
-                transition: opacity 0.15s var(--ease-out);
-            }
-            .btn:hover {
-                opacity: 0.85;
-            }
-
-            /* Hero — clips are the first thing you see */
-            .hero {
-                padding-top: clamp(0.5rem, 1.5vw, 1.2rem);
-                padding-bottom: clamp(3rem, 6vw, 5.5rem);
-            }
+            /* Hero — clips are the first thing you see. The reels row is what
+               makes this grid differ from /audio's, so it stays here. */
             .hero-inner {
                 display: grid;
                 align-items: start;
@@ -274,10 +198,6 @@
                 row-gap: clamp(1.6rem, 4vw, 3rem);
                 grid-template-columns: 1fr minmax(96px, 130px);
                 grid-template-areas: "copy photo" "reels reels";
-            }
-            .hero-copy {
-                grid-area: copy;
-                min-width: 0;
             }
             .hero-reels {
                 grid-area: reels;
@@ -290,20 +210,13 @@
                     grid-template-areas: "copy photo" "reels reels";
                 }
             }
+            /* Stays here, not in portfolio.css: a media query adds no
+               specificity, so a shared copy would lose to the page's own
+               .hero-inner rule above it. */
             @media (min-width: 820px) {
                 .hero-inner {
                     grid-template-columns: 1fr minmax(240px, 280px);
                 }
-            }
-            .hero h1 {
-                font-size: var(--fs-h1);
-                line-height: 1.05;
-                letter-spacing: -0.03em;
-                margin: 1rem 0 0;
-                text-wrap: balance;
-            }
-            .hero h1 .hl {
-                color: color-mix(in srgb, var(--accent) 80%, var(--text));
             }
             .hero .sub {
                 font-size: var(--fs-lead);
@@ -311,9 +224,6 @@
                 max-width: 44ch;
                 margin: 1.1rem 0 0;
                 text-wrap: pretty;
-            }
-            .hero-cta {
-                margin: clamp(1.4rem, 3vw, 2rem) 0 0;
             }
 
             .reels-head {
@@ -325,7 +235,7 @@
             }
             .reels-head .rt {
                 font-size: var(--fs-label);
-                letter-spacing: 0.08em;
+                letter-spacing: var(--tracking-label);
                 text-transform: uppercase;
                 color: color-mix(in srgb, var(--accent) 70%, var(--text));
                 font-weight: 600;
@@ -505,38 +415,13 @@
                 }
             }
 
-            .hero-photo {
-                grid-area: photo;
-            }
-
             /* Sections */
-            section {
-                padding-block: clamp(3.25rem, 6vw, 5.5rem);
-            }
             #work {
                 background: color-mix(in srgb, var(--accent) 8%, var(--bg));
                 border-top: 1px solid var(--line);
             }
             #about {
                 border-top: 1px solid var(--line);
-            }
-            .lead {
-                margin-bottom: clamp(1.6rem, 3vw, 2.2rem);
-            }
-            .lead h2 {
-                font-size: var(--fs-h2);
-                color: color-mix(in srgb, var(--accent) 35%, var(--text));
-            }
-            @media (prefers-color-scheme: dark) {
-                .lead h2 {
-                    color: color-mix(in srgb, var(--accent) 14%, var(--text));
-                }
-            }
-            :root[data-theme="light"] .lead h2 {
-                color: color-mix(in srgb, var(--accent) 35%, var(--text));
-            }
-            :root[data-theme="dark"] .lead h2 {
-                color: color-mix(in srgb, var(--accent) 14%, var(--text));
             }
             .lead-sub {
                 color: var(--muted);
@@ -545,16 +430,6 @@
                 max-width: 52ch;
             }
 
-            .work-grid {
-                display: grid;
-                gap: clamp(1.1rem, 2.5vw, 1.8rem);
-                grid-template-columns: 1fr;
-            }
-            @media (min-width: 600px) {
-                .work-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-            }
             @media (max-width: 599px) {
                 .work-grid,
                 .feature {
@@ -562,139 +437,16 @@
                     margin-inline: auto;
                 }
             }
+            /* The work grid stacks the feature card above the pairs rather than
+               spanning it across them, so it needs bottom margin where /audio's
+               grid-column span does not. */
             .feature {
                 margin-bottom: clamp(1.1rem, 2.5vw, 1.8rem);
             }
-            .vcard {
-                display: flex;
-                flex-direction: column;
-                background: color-mix(in srgb, var(--accent) 5%, var(--panel));
-                border-radius: 14px;
-                overflow: hidden;
-                box-shadow: 0 4px 16px -10px rgba(0, 0, 0, 0.16);
-                transition:
-                    box-shadow 0.18s var(--ease-out),
-                    transform 0.18s var(--ease-out);
-            }
-            .vcard:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 16px 38px -20px rgba(0, 0, 0, 0.32);
-            }
-            .vcard video {
-                width: 100%;
-                aspect-ratio: 16/9;
-                display: block;
-                background: #000;
-                object-fit: cover;
-            }
-            /* Video card player (.vmedia/.vplay/.vdur) is shared -- see base.css. */
-            .vmeta {
-                padding: 1rem 1.1rem 1.2rem;
-            }
-            .vtag {
-                display: inline-block;
-                font-size: var(--fs-label);
-                letter-spacing: 0.06em;
-                text-transform: uppercase;
-                font-weight: 600;
-                color: color-mix(in srgb, var(--accent) 70%, var(--text));
-                margin-bottom: 0.4rem;
-            }
-            .vcard h3 {
-                font-size: var(--fs-base);
-                font-weight: 600;
-                letter-spacing: -0.02em;
-                margin: 0;
-            }
-            .vsub {
-                color: var(--muted);
-                font-size: var(--fs-sm);
-                margin: 0.35rem 0 0;
-                line-height: 1.5;
-            }
             @media (min-width: 760px) {
-                .feature {
-                    display: grid;
-                    grid-template-columns: 1.5fr 1fr;
-                    align-items: stretch;
-                }
-                .feature .vmeta {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    padding: clamp(1.4rem, 3.5vw, 2.6rem);
-                }
                 .feature .vtag {
                     margin-bottom: 0.6rem;
                 }
-                .feature h3 {
-                    font-size: var(--fs-h2);
-                }
-                .feature .vsub {
-                    font-size: var(--fs-base);
-                    margin-top: 0.7rem;
-                    max-width: 40ch;
-                }
-            }
-
-            .about-grid {
-                display: grid;
-                gap: clamp(2rem, 5vw, 4rem);
-                grid-template-columns: 1fr;
-                align-items: start;
-            }
-            @media (min-width: 860px) {
-                .about-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-            }
-            .about-grid .big {
-                font-size: var(--fs-h2);
-                font-weight: 600;
-                letter-spacing: -0.02em;
-                line-height: 1.25;
-                margin: 0;
-                max-width: 22ch;
-            }
-            .about-grid .muted {
-                color: var(--muted);
-                margin-top: 1.1rem;
-                max-width: 42ch;
-            }
-            .eng-list {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                display: grid;
-                gap: 1.3rem;
-            }
-            .eng-head {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-            }
-            .eng-head strong {
-                font-weight: 600;
-            }
-            .eng-desc {
-                color: var(--muted);
-                font-size: var(--fs-sm);
-                margin: 0.4rem 0 0;
-                padding-left: calc(2.4rem + 1rem);
-            }
-            .eng-ic {
-                flex: none;
-                display: grid;
-                place-items: center;
-                width: 2.4rem;
-                height: 2.4rem;
-                border-radius: 10px;
-                background: color-mix(in srgb, var(--accent) 12%, transparent);
-                color: var(--accent);
-            }
-            .eng-ic svg {
-                width: 20px;
-                height: 20px;
             }
 
             .contact .headline {
@@ -706,7 +458,6 @@
                 text-wrap: balance;
             }
             .contact .headline .mail {
-                font-size: inherit;
                 /* Mixed toward white, not toward the accent: this cyan against
                    the --deep blue band is a narrow luminance gap, so more
                    accent means less contrast (40% measures 3.95:1, 45% only
@@ -720,147 +471,11 @@
                     transparent
                 );
             }
-            /* The contact band is always the deep ink panel, so the link is
-               styled against that ground directly -- no light/dark variant. */
-            .contact a.mail {
-                font-size: var(--fs-base);
-                color: #fff;
-                text-decoration: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-                padding-bottom: 0.15em;
-                transition: border-color 0.15s var(--ease-out);
-            }
-            .contact a.mail:hover {
-                border-color: var(--accent2);
-            }
-            .contact-meta {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1.5rem 3rem;
-                margin-top: 2.5rem;
-            }
-            .contact-meta div {
-                display: grid;
-                gap: 0.25rem;
-            }
-            .contact-meta .k {
-                font-size: var(--fs-label);
-                letter-spacing: 0.02em;
-                text-transform: uppercase;
-                font-weight: 600;
-            }
-            .contact-meta .v {
-                color: var(--muted);
-            }
-            .contact {
-                background:
-                    radial-gradient(
-                        100% 120% at 12% -10%,
-                        color-mix(in srgb, var(--accent) 26%, transparent),
-                        transparent 55%
-                    ),
-                    /* Dot field with ~40% of the grid randomly missing, so it
-                       reads as scattered rather than a repeating lattice. */
-                    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20154%20154'%20fill='%23ffffff'%20fill-opacity='0.05'%3E%3Ccircle%20cx='33'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='55'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='143'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='143'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='55'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='143'%20r='1'/%3E%3C/svg%3E")
-                        0 0 / 154px 154px,
-                    var(--deep);
-                color: #fff;
-            }
+            /* Contact-key tint is per surface: this cyan --accent2 on the
+               --deep blue band clears 4.5:1 at 18%, where /audio's warmer pair
+               needs 28%. Same reason the headline mixes differ. */
             .contact .k {
                 color: color-mix(in srgb, var(--accent2) 18%, #fff);
-            }
-            .contact .v {
-                color: rgba(255, 255, 255, 0.9);
-            }
-            .contact :focus-visible {
-                outline-color: #fff;
-            }
-
-            footer.site {
-                padding: 3rem 0 3.5rem;
-                border-top: 1px solid var(--line);
-            }
-            .foot {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1rem 2rem;
-                align-items: center;
-                justify-content: space-between;
-                color: var(--muted);
-                font-size: var(--fs-label);
-            }
-            .foot a {
-                color: var(--muted);
-                text-decoration: none;
-            }
-            .foot a:hover {
-                color: var(--text);
-            }
-            .foot .also {
-                display: flex;
-                gap: 1.4rem;
-                flex-wrap: wrap;
-            }
-            .foot .also a {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.3em;
-            }
-            .foot .also a::after {
-                content: "\2197";
-                color: var(--faint);
-            }
-
-            /* Finesse */
-            @media (prefers-reduced-motion: no-preference) {
-                .reveal {
-                    opacity: 0;
-                    transform: translateY(18px);
-                    transition:
-                        opacity 0.7s var(--ease-out),
-                        transform 0.7s var(--ease-out);
-                }
-                .reveal.in {
-                    opacity: 1;
-                    transform: none;
-                }
-            }
-            nav.top a {
-                position: relative;
-            }
-            nav.top a::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: -4px;
-                height: 1.5px;
-                background: currentColor;
-                border-radius: 2px;
-                transform: scaleX(0);
-                transform-origin: left;
-                transition: transform 0.25s var(--ease-out);
-            }
-            nav.top a:hover::after {
-                transform: scaleX(1);
-            }
-            .btn {
-                transition:
-                    opacity 0.15s var(--ease-out),
-                    transform 0.15s var(--ease-out);
-            }
-            .btn:hover {
-                transform: translateY(-1px);
-            }
-
-            @media (prefers-reduced-motion: reduce) {
-                html {
-                    scroll-behavior: auto;
-                }
-                * {
-                    animation: none !important;
-                    transition: none !important;
-                }
             }
         </style>
     </head>
