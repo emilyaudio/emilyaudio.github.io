@@ -66,6 +66,21 @@ shot: ## Screenshot the running site to $(SHOT) (override URL=, SIZE=)
 		--force-device-scale-factor=1 --window-size=$(SIZE) \
 		--screenshot="$(SHOT)" "$(URL)" >/dev/null 2>&1 && echo "wrote $(SHOT)"
 
+# Regenerate the committed link-preview cards (image/og-*.png) from
+# scripts/og-card.html. Not part of any build -- the PNGs are checked in, so run
+# this by hand after editing the card, the portrait, or the logo. Needs
+# ImageMagick (brew install imagemagick) alongside Chrome.
+.PHONY: og
+og: ## Regenerate the Open Graph link-preview cards into image/
+	@CHROME="$(CHROME)" bash scripts/og-cards.sh
+
+# Regenerate the committed raster icons (favicon.ico, image/apple-touch-icon.png)
+# from scripts/icon.html. Same deal as `og`: checked-in artifacts, run by hand.
+# Keep image/favicon.svg -- the copy browsers use -- in step with that wrapper.
+.PHONY: icons
+icons: ## Regenerate favicon.ico + apple-touch-icon.png from scripts/icon.html
+	@CHROME="$(CHROME)" bash scripts/icons.sh
+
 .PHONY: stop
 stop: ## Tear down the dev session
 	@tmux kill-session -t $(SESSION) 2>/dev/null && echo "Stopped." || echo "Not running."

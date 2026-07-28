@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>icon</title>
+        <style>
+            /* Wrapper for scripts/icons.sh. The mark lives in
+               image/favicon.svg for the browser to use directly; this page
+               exists only to rasterize it, and it carries its own inline copy
+               of the geometry for two reasons:
+
+               1. An <img> of favicon.svg would inherit that file's
+                  prefers-color-scheme query. A .ico and an apple-touch-icon
+                  each carry ONE fixed palette, so both are pinned to the dark
+                  accents -- the pair that holds up on light and dark chrome
+                  alike, and on this navy.
+               2. Headless Chrome on macOS floors the layout viewport at ~485px
+                  (see the `shot` target's note in the Makefile). A standalone
+                  SVG document gets stretched to that floor and the screenshot
+                  clips one magnified corner; a sized div that matches the
+                  requested capture box does not.
+
+               Keep the four rects in step with image/favicon.svg by hand. */
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .plate {
+                display: grid;
+                place-items: center;
+            }
+            /* ?v=ico -- transparent, mark full-bleed, downscaled to 32 + 16. */
+            [data-v="ico"] .plate {
+                width: 32px;
+                height: 32px;
+            }
+            [data-v="ico"] svg {
+                width: 32px;
+                height: 32px;
+            }
+            /* ?v=touch -- iOS never honours transparency and applies its own
+               rounded mask, so this ships opaque on the site's --bg, inset. */
+            [data-v="touch"] .plate {
+                width: 180px;
+                height: 180px;
+                background: #001021;
+            }
+            [data-v="touch"] svg {
+                width: 108px;
+                height: 108px;
+            }
+            svg {
+                display: block;
+            }
+            .vo {
+                fill: #1fb6e4;
+            }
+            .post {
+                fill: #e0685c;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="plate">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+                <rect
+                    class="vo"
+                    x="3.5"
+                    y="9.5"
+                    width="4"
+                    height="13"
+                    rx="2"
+                />
+                <rect
+                    class="vo"
+                    x="10.5"
+                    y="3"
+                    width="4"
+                    height="26"
+                    rx="2"
+                />
+                <rect
+                    class="post"
+                    x="17.5"
+                    y="6.5"
+                    width="4"
+                    height="19"
+                    rx="2"
+                />
+                <rect
+                    class="post"
+                    x="24.5"
+                    y="10.5"
+                    width="4"
+                    height="11"
+                    rx="2"
+                />
+            </svg>
+        </div>
+        <script>
+            document.documentElement.setAttribute(
+                "data-v",
+                new URLSearchParams(location.search).get("v") || "touch",
+            );
+        </script>
+    </body>
+</html>

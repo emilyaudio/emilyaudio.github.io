@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>OG card</title>
+        <style>
+            /* Tokens copied from base.css (dark theme -- the site's base
+               default, and the theme most embed surfaces sit in). */
+            :root {
+                --bg: #001021;
+                --panel: #13293d;
+                --text: #e9f2f6;
+                --muted: #9db0ba;
+                --vo: #1fb6e4;
+                --post: #e0685c;
+                --photo-bg: color-mix(in srgb, var(--text) 40%, var(--panel));
+                --sans:
+                    "Helvetica Neue", Helvetica, Arial, "Segoe UI", system-ui,
+                    sans-serif;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .card {
+                width: 1200px;
+                height: 630px;
+                overflow: hidden;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                align-items: center;
+                column-gap: 64px;
+                padding: 72px 80px;
+                background-color: var(--bg);
+                /* Mirrors the site body gradient (panel -> bg over 900px). */
+                background-image: linear-gradient(
+                    180deg,
+                    var(--panel),
+                    var(--bg) 900px
+                );
+                font-family: var(--sans);
+                color: var(--text);
+            }
+            .mark {
+                display: block;
+                height: 76px;
+                aspect-ratio: 810 / 303;
+                background-color: var(--muted);
+                -webkit-mask: url("../image/emily_audio_logo.png") left center /
+                    contain
+                    no-repeat;
+                mask: url("../image/emily_audio_logo.png") left center / contain
+                    no-repeat;
+            }
+            /* Sized for the SMALL render, not this canvas: Discord and Slack
+               scale the 1200px card down to ~400px wide, so every step here is
+               about 3x what it will be read at. Prose belongs in the
+               description meta tag, which sits right above the image anyway --
+               the card carries identity only. */
+            h1 {
+                font-size: 82px;
+                line-height: 1.05;
+                letter-spacing: -0.03em;
+                font-weight: 700;
+                margin: 34px 0 0;
+            }
+            .roles {
+                font-size: 36px;
+                font-weight: 600;
+                letter-spacing: -0.01em;
+                margin: 22px 0 0;
+            }
+            .roles .sep {
+                color: var(--muted);
+                font-weight: 400;
+                padding: 0 10px;
+            }
+            .roles .a-vo {
+                color: var(--vo);
+            }
+            .roles .a-post {
+                color: var(--post);
+            }
+            .motifs {
+                display: flex;
+                align-items: flex-end;
+                gap: 32px;
+                margin-top: 52px;
+            }
+            .motifs svg {
+                width: 208px;
+                height: 63px;
+                display: block;
+            }
+            .motifs .m-vo {
+                color: var(--vo);
+            }
+            .motifs .m-post {
+                color: var(--post);
+            }
+
+            /* The site's portrait component: 4:5 frame, photo-bg fill, hard
+               offset block + soft shadow, figure anchored to the bottom. */
+            .photo {
+                position: relative;
+                width: 356px;
+                aspect-ratio: 4 / 5;
+                overflow: hidden;
+                border-radius: 12px;
+                background: var(--photo-bg);
+                transform: translateX(-18px);
+                box-shadow:
+                    18px 18px 0 -1px color-mix(in srgb, var(--text) 10%, var(--bg)),
+                    0 12px 34px -16px rgba(0, 0, 0, 0.3);
+            }
+            .photo img {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 66%;
+                height: auto;
+                display: block;
+                filter: saturate(0.85);
+            }
+
+            /* Per-variant: only one accent and one motif on the surface cards. */
+            [data-v="vo"] .only-hub,
+            [data-v="audio"] .only-hub {
+                display: none;
+            }
+            [data-v="hub"] .only-vo,
+            [data-v="audio"] .only-vo,
+            [data-v="hub"] .only-post,
+            [data-v="vo"] .only-post {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="card">
+            <div>
+                <span class="mark"></span>
+                <h1>Emily Bryner</h1>
+                <p class="roles">
+                    <span class="a-vo only-hub">Voice-over</span
+                    ><span class="sep only-hub">·</span
+                    ><span class="a-post only-hub">Audio Post-Production</span>
+                    <span class="a-vo only-vo">Voice-over</span>
+                    <span class="a-post only-post">Audio Post-Production</span>
+                </p>
+                <div class="motifs">
+                    <svg class="m-vo" viewBox="0 0 132 40" aria-hidden="true">
+                        <g fill="currentColor">
+                            <rect x="0" y="16" width="4" height="8" rx="2" />
+                            <rect x="6" y="13" width="4" height="14" rx="2" />
+                            <rect x="12" y="9" width="4" height="22" rx="2" />
+                            <rect x="18" y="5" width="4" height="30" rx="2" />
+                            <rect x="24" y="11" width="4" height="18" rx="2" />
+                            <rect x="30" y="15" width="4" height="10" rx="2" />
+                            <rect x="36" y="12" width="4" height="16" rx="2" />
+                            <rect x="42" y="7" width="4" height="26" rx="2" />
+                            <rect x="48" y="3" width="4" height="34" rx="2" />
+                            <rect x="54" y="8" width="4" height="24" rx="2" />
+                            <rect x="60" y="14" width="4" height="12" rx="2" />
+                            <rect x="66" y="10" width="4" height="20" rx="2" />
+                            <rect x="72" y="6" width="4" height="28" rx="2" />
+                            <rect x="78" y="12" width="4" height="16" rx="2" />
+                            <rect x="84" y="16" width="4" height="8" rx="2" />
+                            <rect x="90" y="13" width="4" height="14" rx="2" />
+                            <rect x="96" y="8" width="4" height="24" rx="2" />
+                            <rect x="102" y="4" width="4" height="32" rx="2" />
+                            <rect x="108" y="10" width="4" height="20" rx="2" />
+                            <rect x="114" y="14" width="4" height="12" rx="2" />
+                            <rect x="120" y="11" width="4" height="18" rx="2" />
+                            <rect x="126" y="15" width="4" height="10" rx="2" />
+                        </g>
+                    </svg>
+                    <svg class="m-post" viewBox="0 0 132 40" aria-hidden="true">
+                        <path
+                            d="M2 34 L2 28 C14 28 20 26 28 22 C34 19 38 9 48 9 C58 9 62 20 70 21 C78 22 82 16 92 15 C102 14 108 22 116 27 C122 30 126 32 130 33 L130 34 Z"
+                            fill="currentColor"
+                            opacity="0.16"
+                        />
+                        <path
+                            d="M2 28 C14 28 20 26 28 22 C34 19 38 9 48 9 C58 9 62 20 70 21 C78 22 82 16 92 15 C102 14 108 22 116 27 C122 30 126 32 130 33"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.4"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </div>
+            </div>
+            <div class="photo">
+                <img src="../image/em1_transparent.webp" alt="" />
+            </div>
+        </section>
+        <script>
+            // Variant comes from ?v=hub|vo|audio; taglines mirror each
+            // surface's own headline copy.
+            // Variant comes from ?v=hub|vo|audio. The hub keeps both motifs
+            // (it carries both accents); each surface card keeps only its own.
+            var v = new URLSearchParams(location.search).get("v") || "hub";
+            var drop = { hub: null, vo: ".m-post", audio: ".m-vo" };
+            document.documentElement.setAttribute("data-v", v);
+            if (drop[v]) document.querySelector(drop[v]).remove();
+        </script>
+    </body>
+</html>

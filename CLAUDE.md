@@ -90,6 +90,12 @@ Assumes a bare machine with only `make` + `brew`; first run installs the rest.
   reload + opens browser) on the left, `claude` on the right.
 - `make shot` -- screenshots the running site to `/tmp/emilyaudio-shot.png` so
   Claude can Read it. Override the page: `make shot URL=http://localhost:3000/vo/`.
+- `make og`   -- regenerate the link-preview cards (`image/og-*.png`) from
+  `scripts/og-card.html`; run after editing the card, portrait, or logo.
+- `make icons` -- regenerate `favicon.ico` + `image/apple-touch-icon.png` from
+  `scripts/icon.html`. The mark's geometry is duplicated between that file and
+  `image/favicon.svg` (the copy browsers use) on purpose -- edit both, they are
+  asserted to match.
 - `make stop` -- kill the dev session.
 - Deps (`make deps`): tmux, node, google-chrome via brew; claude via Anthropic's
   recommended native installer; browser-sync via npm. Alt: `python3 -m http.server`.
