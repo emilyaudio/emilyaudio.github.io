@@ -3,3 +3,4 @@ node_modules/
 .cache/
 reports/
 .playwright-mcp/
+emilyaudio-audit.md
