@@ -19,6 +19,11 @@
        Dark keeps the heavier 40% mix -- the subject wears black, and a paler
        frame here would cost the silhouette its edge. */
     --photo-bg: color-mix(in srgb, var(--text) 40%, var(--panel));
+    /* Foreground on the saturated --accent ground (the round play button).
+       Not restated per theme on purpose: --accent stays dark enough in both,
+       so this side of the pair never flips. Distinct from --btn-fg, which
+       does flip -- its ground (--btn-bg) inverts with the theme. */
+    --on-accent: #ffffff;
     --sans:
         "Helvetica Neue", Helvetica, Arial, "Segoe UI", system-ui, sans-serif;
     --fs-label: 0.8rem;
@@ -318,22 +323,19 @@ nav.top a:hover {
     border-radius: 50%;
     border: none;
     background: var(--accent);
-    color: #fff;
+    color: var(--on-accent);
     display: grid;
     place-items: center;
     cursor: pointer;
     box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
-    transition:
-        transform 0.15s var(--ease-out),
-        opacity 0.2s var(--ease-out);
+    /* No hover transform: the card it sits on already lifts on hover, and one
+       signal per state is enough. */
+    transition: opacity 0.2s var(--ease-out);
 }
 .vplay svg {
     width: 24px;
     height: 24px;
     margin-left: 3px;
-}
-.vplay:hover {
-    transform: scale(1.09);
 }
 .vmedia.playing .vplay {
     opacity: 0;

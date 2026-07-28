@@ -18,6 +18,14 @@
    @media (min-width: 820px) { .hero-inner } stays inline on both pages -- the
    base .hero-inner rule is page-specific and appears later in source order. */
 
+:root {
+    /* Foreground on --deep, the contact band's ground. Lives here rather than
+       in base.css because --deep does too: it is a portfolio token, and the hub
+       has no such band. Not restated per theme -- --deep is a saturated ink on
+       both surfaces and stays dark in light and dark mode alike. */
+    --on-deep: #ffffff;
+}
+
 /* ===== Header extras (beyond the shared brand/toggle in base.css) ===== */
 .menuBtn {
     display: grid;
@@ -338,15 +346,17 @@ section {
         url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20154%20154'%20fill='%23ffffff'%20fill-opacity='0.05'%3E%3Ccircle%20cx='33'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='55'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='143'%20cy='11'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='33'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='143'%20cy='55'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='77'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='99'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='121'%20r='1'/%3E%3Ccircle%20cx='11'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='33'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='55'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='77'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='99'%20cy='143'%20r='1'/%3E%3Ccircle%20cx='121'%20cy='143'%20r='1'/%3E%3C/svg%3E")
             0 0 / 154px 154px,
         var(--deep);
-    color: #fff;
+    color: var(--on-deep);
 }
 /* The band is always the deep ink panel, so the link is styled against that
-   ground directly -- no light/dark variant. No font-size here: a.mail only
-   ever appears inside .headline, which sets its own. */
+   ground directly -- no light/dark variant. a.mail only ever appears inside
+   .headline, which sets its own font-size, color and border-color; what
+   survives here is the border's width and style, the padding and the
+   transition. The border colour below is the fallback for a page that doesn't
+   override it, not a value in effect on either current surface. */
 .contact a.mail {
-    color: #fff;
     text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid color-mix(in srgb, var(--on-deep) 40%, transparent);
     padding-bottom: 0.15em;
     transition: border-color 0.15s var(--ease-out);
 }
@@ -373,10 +383,10 @@ section {
     font-weight: 600;
 }
 .contact-meta .v {
-    color: rgba(255, 255, 255, 0.9);
+    color: color-mix(in srgb, var(--on-deep) 90%, transparent);
 }
 .contact :focus-visible {
-    outline-color: #fff;
+    outline-color: var(--on-deep);
 }
 
 /* ===== Footer ===== */
