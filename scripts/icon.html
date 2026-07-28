@@ -11,11 +11,21 @@
 
                1. An <img> of favicon.svg would inherit that file's
                   prefers-color-scheme query. A .ico and an apple-touch-icon
-                  each carry ONE fixed palette, and a one-colour mark cannot
-                  pick a tone that works transparently on both light and dark
-                  chrome -- whichever it picks, it vanishes against the matching
-                  one. So both rasters ship as an opaque tile: the off-white
-                  mark on the site's --bg navy, legible on any chrome.
+                  each carry ONE fixed palette, so each needs a tone chosen by
+                  hand. The two answers differ:
+
+                  favicon.ico ships TRANSPARENT with a mid grey mark. An
+                  extreme tone (off-white or off-black) does vanish against the
+                  chrome that matches it, but a mid tone does not: #7c8386
+                  measures at worst 2.91:1 against every real tab strip tested
+                  (Chrome, Firefox and Safari, light and dark), and better than
+                  3.6:1 against most. It is a compromise rather than a match
+                  for either theme -- the SVG is what gives a crisp themed mark
+                  -- but it is legible everywhere and carries no black box.
+
+                  apple-touch-icon.png stays an OPAQUE tile, because iOS
+                  composites a transparent touch icon onto black and applies
+                  its own mask. Transparency is not an option there.
                2. Headless Chrome on macOS floors the layout viewport at ~485px
                   (see the `shot` target's note in the Makefile). A standalone
                   SVG document gets stretched to that floor and the screenshot
@@ -31,10 +41,10 @@
             .plate {
                 display: grid;
                 place-items: center;
-                background: #001021;
             }
-            /* ?v=ico -- downscaled to 32 + 16. The mark is inset less than the
-               touch icon's: at 16px there is no room to spend on margin. */
+            /* ?v=ico -- downscaled to 32 + 16. No plate colour: icons.sh renders
+               this variant on a transparent backdrop. The mark is inset less
+               than the touch icon's: at 16px there is no room for margin. */
             [data-v="ico"] .plate {
                 width: 32px;
                 height: 32px;
@@ -43,21 +53,26 @@
                 width: 32px;
                 height: 32px;
             }
+            [data-v="ico"] .bar {
+                fill: #7c8386;
+            }
             /* ?v=touch -- iOS applies its own rounded mask and never honours
-               transparency, so the mark sits well inside the tile. */
+               transparency, so this one keeps the navy plate and the mark sits
+               well inside it. */
             [data-v="touch"] .plate {
                 width: 180px;
                 height: 180px;
+                background: #001021;
             }
             [data-v="touch"] svg {
                 width: 108px;
                 height: 108px;
             }
+            [data-v="touch"] .bar {
+                fill: #e9f2f6;
+            }
             svg {
                 display: block;
-            }
-            .bar {
-                fill: #e9f2f6;
             }
         </style>
     </head>
