@@ -23,6 +23,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # vo/peaks.json holds the measured waveform of each demo reel, keyed by
+      # filename with the audio's sha256 alongside. --check compares those
+      # hashes against vo/audio/*.mp3 -- it needs no ffmpeg and takes about a
+      # second, so a push that doesn't touch the audio pays nothing. The hash
+      # (not the filename) is what catches a reel re-recorded under its old
+      # name.
+      - id: peaks
+        run: |
+          if python3 scripts/peaks.py --check; then
+            echo "stale=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Regenerated into the runner's checkout, never committed: the artifact
+      # below picks it up, so the deployed peaks.json and audio always match.
+      # Committing the refreshed file is what stops later pushes repeating this.
+      - if: steps.peaks.outputs.stale == 'true'
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          python3 scripts/peaks.py
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1026,17 +1026,35 @@
                     Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0")
                 );
             }
-            function heights(seed) {
-                var h = [];
-                for (var i = 0; i < BARS; i++) {
-                    var x = i / BARS,
-                        env = Math.sin(Math.PI * x);
-                    var v =
-                        Math.abs(Math.sin(i * 0.7 + seed)) * 0.6 +
-                        Math.abs(Math.sin(i * 0.29 + seed * 1.7)) * 0.4;
-                    h.push(0.14 + 0.86 * env * v);
-                }
-                return h;
+            // Waveforms are the real amplitude envelope of each reel, measured
+            // by scripts/peaks.py and served as peaks.json. These bars used to
+            // be procedural sine shapes: on a page whose pitch is a trained
+            // ear, a picture that claims to depict the audio has to.
+            //
+            // Rows render as a flat band first and take their shape when the
+            // fetch lands -- a few KB, same origin. That ordering is the
+            // fallback too: no peaks.json, an unlisted file or a bar-count
+            // mismatch leaves the flat band standing, which claims nothing.
+            // Seeking, timing and the slider never depend on it.
+            var FLAT = 0.28,
+                waveforms = [];
+            var peaksReady = fetch("peaks.json")
+                .then(function (r) {
+                    return r.ok ? r.json() : null;
+                })
+                .catch(function () {
+                    return null;
+                });
+
+            function applyPeaks(data) {
+                if (!data || data.bars !== BARS) return;
+                waveforms.forEach(function (w) {
+                    var entry = data.files[w.file];
+                    if (!entry || entry.peaks.length !== BARS) return;
+                    for (var b = 0; b < BARS; b++)
+                        w.bars[b].style.height =
+                            10 + entry.peaks[b] * 90 + "%";
+                });
             }
             function makeAudio(src) {
                 var a = new Audio();
@@ -1161,15 +1179,15 @@
                 var wave = row.querySelector(".wave"),
                     rtime = row.querySelector(".rtime");
                 var audio = makeAudio(d.src);
-                var hs = heights(i * 1.7 + 1),
-                    bars = [];
+                var bars = [];
                 for (var b = 0; b < BARS; b++) {
                     var el = document.createElement("span");
                     el.className = "bar";
-                    el.style.height = 10 + hs[b] * 90 + "%";
+                    el.style.height = 10 + FLAT * 90 + "%";
                     wave.appendChild(el);
                     bars.push(el);
                 }
+                waveforms.push({ file: d.src.split("/").pop(), bars: bars });
                 var idx = i;
                 function paint() {
                     var frac = audio.duration
@@ -1247,6 +1265,8 @@
                 });
                 tracks.push({ audio: audio, root: row, cat: d.cat });
             });
+
+            peaksReady.then(applyPeaks);
 
             // Play all / Stop
             playAllBtn.addEventListener("click", function () {

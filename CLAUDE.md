@@ -1,7 +1,8 @@
 # emilyaudio.github.io
 
 Static personal site for Emily Bryner (voice-over artist + audio engineer).
-Hand-written HTML, no build step, GitHub Pages.
+Hand-written HTML, GitHub Pages. No build step, with one exception: the `/vo`
+waveform data, regenerated in CI when the demo audio changes (see below).
 
 ## Mental model
 A neutral hub (`index.html`) routing to two standalone portfolios: voice-over
@@ -40,9 +41,18 @@ Hand-write portfolio content (e.g. "Selected work" cards) as static HTML so it
 renders without JS -- crawlable, link-preview-friendly, and matching the
 no-build-step ethos. `/vo` and `/audio` both do this. Reserve JS for behaviour
 (playback, hover, reveal) and for genuinely *generated* markup: the `/vo` hero
-demo waveforms are 64 procedural bars per reel, so static would mean
-hand-writing 320 `<span>`s -- they stay JS. Rule: static for content; JS only
-when static means transcribing generated output. Simplest correct solution wins.
+demo waveforms are 64 bars per reel, so static would mean hand-writing 320
+`<span>`s -- they stay JS. Rule: static for content; JS only when static means
+transcribing generated output. Simplest correct solution wins.
+
+The `/vo` hero demo waveforms are the one generated artifact: `vo/peaks.json`
+is the measured amplitude envelope of each reel, produced by `scripts/peaks.py`.
+It is committed, and the Pages workflow regenerates it into the deploy whenever
+the audio's hashes disagree with the stored ones -- so adding a reel needs no
+manual step. The bars used to be procedural sine shapes; they claimed to depict
+the audio and didn't, which on this page of all pages is not a small thing. Do
+not go back. If `peaks.json` is missing or a reel is not in it, the row draws a
+flat band, which claims nothing -- that fallback is the design, not a stopgap.
 
 ## Design standards (non-negotiable)
 Every visual change must satisfy these. When they conflict with a quick fix,
@@ -104,6 +114,9 @@ Assumes a bare machine with only `make` + `brew`; first run installs the rest.
   Claude can Read it. Override the page: `make shot URL=http://localhost:3000/vo/`.
 - `make og`   -- regenerate the link-preview cards (`image/og-*.png`) from
   `scripts/og-card.html`; run after editing the card, portrait, or logo.
+- `make peaks` -- regenerate `vo/peaks.json` from `vo/audio/*.mp3`. Optional:
+  CI does it too. Run it locally to see real waveforms instead of the flat
+  fallback. Needs ffmpeg.
 - `make icons` -- regenerate `favicon.ico` + `image/apple-touch-icon.png` from
   `scripts/icon.html`. The mark's geometry is duplicated between that file and
   `image/favicon.svg` (the copy browsers use) on purpose -- edit both, they are

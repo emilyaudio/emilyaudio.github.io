@@ -81,6 +81,16 @@ og: ## Regenerate the Open Graph link-preview cards into image/
 icons: ## Regenerate favicon.ico + apple-touch-icon.png from scripts/icon.html
 	@CHROME="$(CHROME)" bash scripts/icons.sh
 
+# Regenerate vo/peaks.json -- the measured waveform of each demo reel -- from
+# vo/audio/*.mp3. Unlike `og` and `icons`, you do not have to remember this one:
+# the Pages workflow runs the same script and regenerates into the deploy when
+# the audio and the committed hashes disagree. Run it locally to see the real
+# waveforms in `make` (without it the reels draw a flat band), and commit the
+# result so later pushes skip the work. Needs ffmpeg (brew install ffmpeg).
+.PHONY: peaks
+peaks: ## Regenerate vo/peaks.json from the demo audio
+	@python3 scripts/peaks.py
+
 .PHONY: stop
 stop: ## Tear down the dev session
 	@tmux kill-session -t $(SESSION) 2>/dev/null && echo "Stopped." || echo "Not running."
