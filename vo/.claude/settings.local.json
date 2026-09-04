@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/emilyharrison/Documents/emilyaudio stuff/emilyaudio.github.io/**)",
+      "Bash(gh run *)",
+      "Bash(curl -s https://emilyaudio.github.io/vo/)"
+    ]
+  }
+}
