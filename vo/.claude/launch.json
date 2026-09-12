@@ -4,7 +4,13 @@
     {
       "name": "static-preview",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4173"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4173",
+        "--directory",
+        "/Users/emilyharrison/Documents/emilyaudio stuff/emilyaudio.github.io"
+      ],
       "port": 4173
     }
   ]
