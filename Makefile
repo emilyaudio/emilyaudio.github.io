@@ -20,7 +20,7 @@ SIZE    ?= 1280,900
 # audit the deployed site instead, no local server needed:
 #   make a11y SITE_URL=https://emilyaudio.com
 SITE_URL ?= http://localhost:3000
-PAGES    := / /vo/ /audio/ /games/
+PAGES    := / /vo/ /audio/
 
 # Bare `make` launches the dev session (all); `make help` lists every target.
 .DEFAULT_GOAL := all

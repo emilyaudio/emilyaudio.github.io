@@ -3,10 +3,10 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Emily Bryner · Voice-over, Audio Post-Production &amp; Games</title>
+        <title>Emily Bryner · Voice-over &amp; Audio Post-Production</title>
         <meta
             name="description"
-            content="Voice talent and audio engineer. Broadcast-ready voice-over for narration, e-learning, animation and games — plus sound design, mixing, and music for games."
+            content="Voice talent and audio engineer. Broadcast-ready voice-over for narration, e-learning, animation and games — plus sound design and mixing for picture."
         />
         <link rel="canonical" href="https://emilyaudio.com/" />
         <!-- Icons. The SVG is the one browsers should use (theme-aware, sharp at
@@ -29,11 +29,11 @@
         <meta property="og:url" content="https://emilyaudio.com/" />
         <meta
             property="og:title"
-            content="Emily Bryner · Voice-over, Audio Post-Production &amp; Games"
+            content="Emily Bryner · Voice-over &amp; Audio Post-Production"
         />
         <meta
             property="og:description"
-            content="Voice talent and audio engineer. Broadcast-ready voice-over for narration, e-learning, animation and games — plus sound design, mixing, and music for games."
+            content="Voice talent and audio engineer. Broadcast-ready voice-over for narration, e-learning, animation and games — plus sound design and mixing for picture."
         />
         <meta
             property="og:image"
@@ -44,7 +44,7 @@
         <meta property="og:image:height" content="630" />
         <meta
             property="og:image:alt"
-            content="Emily Bryner — voice-over, audio post-production, and games"
+            content="Emily Bryner — voice-over and audio post-production"
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
@@ -81,12 +81,11 @@
         <link rel="stylesheet" href="/base.css" />
         <script defer src="/base.js"></script>
         <style>
-            /* Landing hub -- carries all three accents (voice-over blue +
-               audio red + games green). Shared chrome lives in /base.css. */
+            /* Landing hub -- carries both accents (voice-over blue + audio
+               red). Shared chrome lives in /base.css. */
             :root {
                 --vo: #0f6d99;
                 --post: #b23a34;
-                --games: #1b7a4d;
                 /* A single shallow arc for the headline underline (masked, so
                    the colour comes from the element, not the SVG). Stretched
                    under the word -- almost straight, just a hint of curve. */
@@ -96,18 +95,15 @@
                 :root {
                     --vo: #1fb6e4;
                     --post: #e0685c;
-                    --games: #4ade80;
                 }
             }
             :root[data-theme="light"] {
                 --vo: #0f6d99;
                 --post: #b23a34;
-                --games: #1b7a4d;
             }
             :root[data-theme="dark"] {
                 --vo: #1fb6e4;
                 --post: #e0685c;
-                --games: #4ade80;
             }
 
             /* Short page: a sticky-footer column so it fills the viewport. */
@@ -180,11 +176,7 @@
                 right: 0;
                 bottom: 0.04em;
                 height: 0.18em;
-                background: color-mix(
-                    in srgb,
-                    color-mix(in srgb, var(--vo), var(--post)) 66.66%,
-                    var(--games) 33.34%
-                );
+                background: color-mix(in srgb, var(--vo), var(--post));
                 -webkit-mask: var(--wave-underline) no-repeat center / 100% 100%;
                 mask: var(--wave-underline) no-repeat center / 100% 100%;
             }
@@ -210,13 +202,8 @@
             .cards {
                 grid-area: cards;
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: clamp(1rem, 2.2vw, 1.6rem);
-            }
-            @media (max-width: 900px) {
-                .cards {
-                    grid-template-columns: repeat(2, 1fr);
-                }
             }
             @media (max-width: 720px) {
                 .cards {
@@ -227,8 +214,8 @@
                screen edges. Absolute + pinned to main's bottom so it neither
                inflates the hero grid's width (was breaking alignment on wide
                windows via a 100vw grid item) nor adds height that scrolls the
-               footer off short viewports. The hub carries all three crafts,
-               so it blends the three accents; kept faint. */
+               footer off short viewports. The hub carries both crafts, so it
+               blends the two accents; kept faint. */
             .hero-wave {
                 position: absolute;
                 left: 0;
@@ -236,11 +223,7 @@
                 z-index: -1;
                 width: 100%;
                 height: clamp(64px, 10vw, 128px);
-                color: color-mix(
-                    in srgb,
-                    color-mix(in srgb, var(--vo), var(--post)) 66.66%,
-                    var(--games) 33.34%
-                );
+                color: color-mix(in srgb, var(--vo), var(--post));
                 opacity: 0.055;
             }
             .card {
@@ -286,10 +269,6 @@
                 background-image: repeating-linear-gradient(
                     to right, currentColor 0 1px, transparent 1px 8px);
             }
-            .card--games::after {
-                background-image: repeating-linear-gradient(
-                    45deg, currentColor 0 1px, transparent 1px 8px);
-            }
             .card::before {
                 content: "";
                 position: absolute;
@@ -307,9 +286,6 @@
             }
             .card--post {
                 --accent: var(--post);
-            }
-            .card--games {
-                --accent: var(--games);
             }
             .kicker {
                 font-size: 0.76rem;
@@ -426,18 +402,6 @@
                 <circle cx="48" cy="9" r="2.6" fill="currentColor" />
                 <circle cx="92" cy="15" r="2.6" fill="currentColor" />
             </symbol>
-            <symbol id="wave-games" viewBox="0 0 132 40">
-                <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M28 12h20c14 0 18 6 18 14 0 7-4 12-11 12-5 0-7-3-11-7h-2c-4 4-6 7-11 7-7 0-11-5-11-12 0-8 4-14 18-14 8 0 8-4 8-4" />
-                    <path d="M0 26c0-8 6-14 14-14" />
-                    <path d="M118 26c0-8-6-14-14-14" />
-                </g>
-                <g fill="currentColor">
-                    <path d="M32 20v3h-3v2h3v3h2v-3h3v-2h-3v-3z" />
-                    <circle cx="88" cy="19" r="2" />
-                    <circle cx="94" cy="23" r="2" />
-                </g>
-            </symbol>
             <!-- Faders kept as an alternative for the audio-post card. -->
             <symbol id="wave-faders" viewBox="0 0 132 40">
                 <g fill="none" stroke="currentColor" stroke-linecap="round">
@@ -499,7 +463,7 @@
             <div class="wrap">
                 <section class="hero">
                     <div class="hero-copy">
-                        <h1><span class="hl">Three crafts</span>, one trained ear.</h1>
+                        <h1><span class="hl">Two crafts</span>, one trained ear.</h1>
                         <p class="lead">
                             I'm <strong>Emily Bryner</strong>, voice talent and
                             audio engineer, equally at home in the booth and
@@ -545,19 +509,6 @@
                                 >See the work <span class="arrow">→</span></span
                             >
                         </a>
-
-                        <a class="card card--games" href="/games/">
-                            <p class="kicker">Games</p>
-                            <h2><span class="hl">Play</span> a role in the story.</h2>
-                            <p>
-                                Voice-over, sound design, and original music
-                                for games.
-                            </p>
-                            <svg class="wave"><use href="#wave-games" /></svg>
-                            <span class="cta"
-                                >See the work <span class="arrow">→</span></span
-                            >
-                        </a>
                     </div>
 
                     <svg class="hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
@@ -570,8 +521,8 @@
         <footer class="site">
             <div class="wrap">
                 <p class="foot">
-                    &copy; 2026 Emily Bryner &middot; Voice-over, Audio
-                    Post-Production &amp; Games
+                    &copy; 2026 Emily Bryner &middot; Voice-over &amp; Audio
+                    Post-Production
                 </p>
             </div>
         </footer>
