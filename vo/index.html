@@ -449,6 +449,60 @@
                 }
             }
 
+            /* The vertical Short and the Mark Hamill feature side by side. The 16:9
+               and 9:16 media heights match when the columns are 256:81. */
+            .feature-row {
+                display: grid;
+                gap: clamp(1.1rem, 2.5vw, 1.8rem);
+                grid-template-columns: 1fr;
+                margin-bottom: clamp(1.1rem, 2.5vw, 1.8rem);
+            }
+            @media (max-width: 599px) {
+                .feature-row {
+                    max-width: 440px;
+                    margin-inline: auto;
+                }
+                .vcard--short {
+                    max-width: 280px;
+                    margin-inline: auto;
+                }
+            }
+            @media (min-width: 760px) {
+                .feature-row {
+                    grid-template-columns: minmax(0, 1fr) minmax(0, 3.16fr);
+                    align-items: start;
+                }
+            }
+            .vshort {
+                position: relative;
+                aspect-ratio: 9 / 16;
+                background: #000;
+            }
+            .vshort-play {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                border: 0;
+                background: none;
+                cursor: pointer;
+                display: block;
+            }
+            .vshort-play img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .vshort iframe {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+
             .contact .headline {
                 font-size: var(--fs-h2);
                 font-weight: 600;
@@ -649,41 +703,77 @@
                             campaigns, and animated shorts.
                         </p>
                     </div>
-                    <article class="vcard feature">
-                        <div class="vmedia">
-                            <video
-                                preload="metadata"
-                                playsinline
-                                poster="video/no_wrong_reason.jpg"
-                            >
-                                <source
-                                    src="video/no_wrong_reason.mp4"
-                                    type="video/mp4"
-                                /></video
-                            ><button
-                                type="button"
-                                class="vplay"
-                                aria-label="Play No Wrong Reason"
-                            >
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    aria-hidden="true"
+                    <div class="feature-row">
+                        <article class="vcard vcard--short">
+                            <div class="vshort">
+                                <button
+                                    type="button"
+                                    class="vshort-play"
+                                    data-yt="Dj-RBmzLIaA"
+                                    data-title="911 Operator Talks Panicking Woman Through Macarena"
+                                    aria-label="Play 911 Operator Talks Panicking Woman Through Macarena (YouTube)"
                                 >
-                                    <path d="M8 5v14l11-7z" />
-                                </svg></button
-                            ><span class="vdur"></span>
-                        </div>
-                        <div class="vmeta">
-                            <span class="vtag">Narrator</span>
-                            <h3>No Wrong Reason</h3>
-                            <p class="vsub">
-                                Narration for the &ldquo;No Wrong Reason&rdquo;
-                                campaign, featuring UNITED24 ambassador Mark
-                                Hamill.
-                            </p>
-                        </div>
-                    </article>
+                                    <img
+                                        src="video/macarena_911.jpg"
+                                        width="1280"
+                                        height="720"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <span class="vplay" aria-hidden="true"
+                                        ><svg
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path d="M8 5v14l11-7z" /></svg
+                                    ></span>
+                                </button>
+                            </div>
+                            <div class="vmeta">
+                                <span class="vtag">Character VO</span>
+                                <h3>911 Operator Talks Panicking Woman Through Macarena</h3>
+                                <p class="vsub">
+                                    Character voice for The Onion&rsquo;s comedy
+                                    short.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="vcard">
+                            <div class="vmedia">
+                                <video
+                                    preload="metadata"
+                                    playsinline
+                                    poster="video/no_wrong_reason.jpg"
+                                >
+                                    <source
+                                        src="video/no_wrong_reason.mp4"
+                                        type="video/mp4"
+                                    /></video
+                                ><button
+                                    type="button"
+                                    class="vplay"
+                                    aria-label="Play No Wrong Reason"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg></button
+                                ><span class="vdur"></span>
+                            </div>
+                            <div class="vmeta">
+                                <span class="vtag">Narrator</span>
+                                <h3>No Wrong Reason</h3>
+                                <p class="vsub">
+                                    Narration for the &ldquo;No Wrong Reason&rdquo;
+                                    campaign, featuring UNITED24 ambassador Mark
+                                    Hamill.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
                     <div class="work-grid">
                         <article class="vcard">
                             <div class="vmedia">
@@ -967,11 +1057,12 @@
             <div class="wrap foot">
                 <div class="also">
                     <a href="/">Home</a
-                    ><a href="/audio/">Audio Post-Production</a>
+                    ><a href="/audio/">Audio Post-Production</a
+                    ><a href="/games/">Games</a>
                 </div>
                 <span
-                    >&copy; 2026 Emily Bryner &middot; Voice-over &amp; Audio
-                    Post-Production</span
+                    >&copy; 2026 Emily Bryner &middot; Voice-over, Audio
+                    Post-Production &amp; Games</span
                 >
             </div>
         </footer>
@@ -1326,6 +1417,23 @@
             refresh();
 
             // Video card playback is shared behaviour -- see /base.js.
+
+            // Click-to-play YouTube embed for the vertical Short. Nothing loads
+            // from YouTube until the visitor clicks.
+            document.querySelectorAll(".vshort-play").forEach(function (b) {
+                b.addEventListener("click", function () {
+                    var f = document.createElement("iframe");
+                    f.src =
+                        "https://www.youtube-nocookie.com/embed/" +
+                        b.dataset.yt +
+                        "?autoplay=1&rel=0&playsinline=1";
+                    f.title = b.dataset.title;
+                    f.allow = "autoplay; encrypted-media; picture-in-picture";
+                    f.allowFullscreen = true;
+                    b.replaceWith(f);
+                    f.focus();
+                });
+            });
 
             // Finesse: gentle scroll-in reveals (skipped entirely when reduced motion is preferred).
             if (
